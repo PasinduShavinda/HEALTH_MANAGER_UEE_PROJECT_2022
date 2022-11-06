@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:health_manager_uee_project_2022/main.dart';
 
 import 'package:health_manager_uee_project_2022/screens/home_page.dart';
 

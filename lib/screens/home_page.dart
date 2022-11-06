@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:health_manager_uee_project_2022/screens/body-weight-tracker/body_weight_tracker_home.dart';
+import 'package:health_manager_uee_project_2022/screens/daily-meal-plan/daily_meal_plan_home.dart';
+import 'package:health_manager_uee_project_2022/screens/diet-plan/diet_plan_home.dart';
+import 'package:health_manager_uee_project_2022/screens/health-hotline/health_hotline_home.dart';
+import 'package:health_manager_uee_project_2022/screens/healthy-recipe/healthy_recipe_home.dart';
+import 'package:health_manager_uee_project_2022/screens/sleep-plan/sleep_plan_home.dart';
+import 'package:health_manager_uee_project_2022/screens/symptoms-recorder/syptom_record_home.dart';
+import 'package:health_manager_uee_project_2022/screens/water-drinking-plan/water_drink_home.dart';
+import 'package:health_manager_uee_project_2022/screens/work-out-plan/work_out_home.dart';
+import 'bmi-calculator/bmi_home.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Health Manager',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
-      home: HomeScreen(),
-    );
-  }
-}
 class FlutterVizBottomNavigationBarModel {
   IconData icon;
   String label;
 
   FlutterVizBottomNavigationBarModel({required this.icon, required this.label});
 }
-
 
 class HomeScreen extends StatelessWidget {
   List<FlutterVizBottomNavigationBarModel> flutterVizBottomNavigationBarItems = [FlutterVizBottomNavigationBarModel(icon:Icons.home,label:"Home"), FlutterVizBottomNavigationBarModel(icon:Icons.account_circle,label:"Account")];
@@ -94,7 +84,9 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding:EdgeInsets.fromLTRB(0, 19, 0, 0),
             child:MaterialButton(
-              onPressed:(){},
+              onPressed:(){
+                _navigateToDietPlanHome(context);
+              },
               color:Color(0xffc396e5),
               elevation:0,
               shape:RoundedRectangleBorder(
@@ -111,8 +103,11 @@ class HomeScreen extends StatelessWidget {
               minWidth:140,
             ),
           ),
+
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateToDailyMealPlanHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -131,7 +126,9 @@ class HomeScreen extends StatelessWidget {
           Align(
             alignment:Alignment(0.0, -0.2),
             child:MaterialButton(
-              onPressed:(){},
+              onPressed:(){
+                _navigateToBodyWeightTrackerHome(context);
+              },
               color:Color(0xffc396e5),
               elevation:0,
               shape:RoundedRectangleBorder(
@@ -149,7 +146,9 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateToBMIHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -166,7 +165,9 @@ class HomeScreen extends StatelessWidget {
             minWidth:140,
           ),
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateToHealthRecipeHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -183,7 +184,9 @@ class HomeScreen extends StatelessWidget {
             minWidth:140,
           ),
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateSleepPlanHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -200,7 +203,9 @@ class HomeScreen extends StatelessWidget {
             minWidth:140,
           ),
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateToWaterDrinkingPlanHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -217,7 +222,9 @@ class HomeScreen extends StatelessWidget {
             minWidth:140,
           ),
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateToWorkOutPlanHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -234,7 +241,9 @@ class HomeScreen extends StatelessWidget {
             minWidth:140,
           ),
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateToSymptomRecordHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -251,7 +260,9 @@ class HomeScreen extends StatelessWidget {
             minWidth:140,
           ),
           MaterialButton(
-            onPressed:(){},
+            onPressed:(){
+              _navigateToHealthHotlineHome(context);
+            },
             color:Color(0xffc396e5),
             elevation:0,
             shape:RoundedRectangleBorder(
@@ -268,8 +279,47 @@ class HomeScreen extends StatelessWidget {
             minWidth:140,
           ),
         ],),
-    )
-    ;}
+    );
+  }
+  void _navigateToDietPlanHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietPlanHOME()));
+  }
+
+  void _navigateToDailyMealPlanHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DMPHOME()));
+  }
+
+  void _navigateToBodyWeightTrackerHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BWTHOME()));
+  }
+
+  void _navigateToBMIHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BMIHOME()));
+  }
+
+  void _navigateToHealthRecipeHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HealthRecipeHOME()));
+  }
+
+  void _navigateSleepPlanHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SleepPlanHOME()));
+  }
+
+  void _navigateToWaterDrinkingPlanHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => WaterDrinkHOME()));
+  }
+
+  void _navigateToWorkOutPlanHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => WorkOutHOME()));
+  }
+
+  void _navigateToSymptomRecordHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SyptRecordHOME()));
+  }
+
+  void _navigateToHealthHotlineHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HealthHotHOME()));
+  }
 }
 
 

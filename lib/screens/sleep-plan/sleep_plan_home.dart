@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BMIHOME extends StatefulWidget {
-  const BMIHOME({super.key});
+class SleepPlanHOME extends StatefulWidget {
+  const SleepPlanHOME({super.key});
 
   @override
-  State<BMIHOME> createState() => _BMIHOMEState();
+  State<SleepPlanHOME> createState() => _SleepPlanHOMEState();
 }
 
-class _BMIHOMEState extends State<BMIHOME> {
+class _SleepPlanHOMEState extends State<SleepPlanHOME> {
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _BMIHOMEState extends State<BMIHOME> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "BMI Home",
+                  "Sleep Plan Home",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ],
