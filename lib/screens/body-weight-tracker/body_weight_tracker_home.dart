@@ -23,7 +23,7 @@ class _BWTHOMEState extends State<BWTHOME> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "BOdy Weight Tracker Home",
+                  "Body Weight Tracker Home",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ],

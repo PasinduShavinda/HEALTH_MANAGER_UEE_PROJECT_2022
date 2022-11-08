@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'bmi-calculation.dart';
 import 'bmi-result.dart';
 
 enum Gender{
@@ -50,6 +50,8 @@ class _BMIHOMEState extends State<BMIHOME> {
                           color:selectedGender == Gender.male?activeColor:inactiveColor
                       ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             FontAwesomeIcons.male,
@@ -87,6 +89,8 @@ class _BMIHOMEState extends State<BMIHOME> {
                       color:selectedGender == Gender.female?activeColor:inactiveColor
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(
                         FontAwesomeIcons.female,
@@ -115,7 +119,12 @@ class _BMIHOMEState extends State<BMIHOME> {
           ),
           Expanded(
               child: Container(
-                color: inactiveColor,
+                margin: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    color: inactiveColor
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -283,7 +292,8 @@ class _BMIHOMEState extends State<BMIHOME> {
                           ),
                           Text(
                             age.toString(),
-                            style: TextStyle(color: Colors.white,
+                            style: TextStyle(
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                             ),
@@ -357,7 +367,7 @@ class _BMIHOMEState extends State<BMIHOME> {
               ),
             ),
             onTap: (){
-
+              navigateToBMIresultScreen();
             },
           ),
         ],
@@ -365,7 +375,8 @@ class _BMIHOMEState extends State<BMIHOME> {
     );
   }
   
-  void navigateToBMIresultScreen(double result){
-    Navigator.push(context,MaterialPageRoute(builder: (context) => BMIResult()));
+  void navigateToBMIresultScreen(){
+    CalResult obj = CalResult(weight, height);
+    Navigator.push(context,MaterialPageRoute(builder: (context) => BMIResult(obj.calResult(), obj.msg, obj.getDescription())));
   }
 }
