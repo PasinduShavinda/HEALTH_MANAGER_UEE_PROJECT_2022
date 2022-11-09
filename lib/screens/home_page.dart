@@ -43,25 +43,25 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: flutterVizBottomNavigationBarItems.map((FlutterVizBottomNavigationBarModel item) {
-          return BottomNavigationBarItem(
-            icon: Icon(item.icon),
-            label: item.label
-            , );
-        }).toList(),
-        backgroundColor: Color(0xffc396e5),
-        currentIndex: 0,
-        elevation: 8,
-        iconSize: 24,
-        selectedItemColor: Color(0xff3a57e8),
-        unselectedItemColor: Color(0xff9e9e9e),
-        selectedFontSize: 14,
-        unselectedFontSize:14,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        onTap: (value){},
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: flutterVizBottomNavigationBarItems.map((FlutterVizBottomNavigationBarModel item) {
+      //     return BottomNavigationBarItem(
+      //       icon: Icon(item.icon),
+      //       label: item.label
+      //       , );
+      //   }).toList(),
+      //   backgroundColor: Color(0xffc396e5),
+      //   currentIndex: 0,
+      //   elevation: 8,
+      //   iconSize: 24,
+      //   selectedItemColor: Color(0xff3a57e8),
+      //   unselectedItemColor: Color(0xff9e9e9e),
+      //   selectedFontSize: 14,
+      //   unselectedFontSize:14,
+      //   showSelectedLabels: true,
+      //   showUnselectedLabels: true,
+      //   onTap: (value){},
+      // ),
       body:
       Column(
         mainAxisAlignment:MainAxisAlignment.start,
