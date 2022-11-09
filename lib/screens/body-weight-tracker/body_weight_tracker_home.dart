@@ -39,8 +39,9 @@ class _BWTHOMEState extends State<BWTHOME> {
                   controller: _weightController,
                   decoration: const InputDecoration(
                       icon: Icon(Icons.man),
-                      labelText: 'Weight'
+                      labelText: 'Weight (Kg)'
                   ),
+                  keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: _dateController,
@@ -73,7 +74,17 @@ class _BWTHOMEState extends State<BWTHOME> {
                   height: 20,
                 ),
                 ElevatedButton(
-                  child: const Text('Submit'),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 160),
+                      backgroundColor: Colors.purple
+                  ),
+                  child: const Text('Submit',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () async {
                     final String weight = _weightController.text;
                     final String dates = _dateController.text;
@@ -82,6 +93,9 @@ class _BWTHOMEState extends State<BWTHOME> {
                       _weightController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Successfully Submitted')
+                      ));
                     }
                   },
                 )
@@ -115,7 +129,11 @@ class _BWTHOMEState extends State<BWTHOME> {
               children: [
                 TextField(
                   controller: _weightController,
-                  decoration: const InputDecoration(labelText: 'Weight'),
+                  decoration: const InputDecoration(
+                      icon: Icon(Icons.man),
+                      labelText: 'Weight'),
+                  keyboardType: TextInputType.number,
+                  
                 ),
                 TextField(
                   controller: _dateController,
@@ -147,18 +165,30 @@ class _BWTHOMEState extends State<BWTHOME> {
                   height: 20,
                 ),
                 ElevatedButton(
-                  child: const Text( 'Update'),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 150),
+                    backgroundColor: Colors.orange
+                  ),
+                  child: const Text( 'Update',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () async {
                     final String weight = _weightController.text;
                     final String dates = _dateController.text;
                     if (weight != null) {
-
                       await _weight
                           .doc(documentSnapshot!.id)
                           .update({"weight": weight, "date": dates});
                       _weightController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Successfully Updated')
+                      ));
                     }
                   },
                 )
@@ -171,9 +201,11 @@ class _BWTHOMEState extends State<BWTHOME> {
   // DELETE WEIGHT FUNCTION
   Future<void> _delete(String recordId) async {
     await _weight.doc(recordId).delete();
-
+    _navigateToBodyWeightTrackerHome(context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('You have successfully deleted a weight record')));
+        content: Text('Successfully Deleted')
+    )
+    );
   }
 
   // VIEW BODY WEIGHTS
@@ -239,7 +271,37 @@ class _BWTHOMEState extends State<BWTHOME> {
                                 Icons.delete,
                                 color: Colors.red,
                               ),
-                                onPressed: () => _delete(documentSnapshot.id),
+                              onPressed: () {
+                                // Delete Confirmation Message
+                                  // set up the buttons
+                                  Widget cancelButton = TextButton(
+                                    child: Text("Cancel"),
+                                    onPressed:  () {
+                                      _navigateToBodyWeightTrackerHome(context);
+                                    },
+                                  );
+                                  Widget continueButton = TextButton(
+                                    child: Text("Ok"),
+                                    onPressed: () => _delete(documentSnapshot.id),
+                                  );
+
+                                  // set up the AlertDialog
+                                  AlertDialog alert = AlertDialog(
+                                    title: Text("Health Manager"),
+                                    content: Text("Are you sure want to delete?"),
+                                    actions: [
+                                      cancelButton,
+                                      continueButton,
+                                    ],
+                                  );
+                                  // show the dialog
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return alert;
+                                    },
+                                  );
+                              },
                             ),
                           ],
                         ),
@@ -261,5 +323,9 @@ class _BWTHOMEState extends State<BWTHOME> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
     );
+  }
+
+  void _navigateToBodyWeightTrackerHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BWTHOME()));
   }
 }
