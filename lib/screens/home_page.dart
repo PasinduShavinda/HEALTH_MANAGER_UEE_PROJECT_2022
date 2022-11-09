@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/body-weight-tracker/body_weight_tracker_home.dart';
 import 'package:health_manager_uee_project_2022/screens/daily-meal-plan/daily_meal_plan_home.dart';
 import 'package:health_manager_uee_project_2022/screens/diet-plan/diet_plan_home.dart';
@@ -9,6 +10,7 @@ import 'package:health_manager_uee_project_2022/screens/symptoms-recorder/syptom
 import 'package:health_manager_uee_project_2022/screens/water-drinking-plan/water_drink_home.dart';
 import 'package:health_manager_uee_project_2022/screens/work-out-plan/work_out_home.dart';
 import 'bmi-calculator/bmi_home.dart';
+import 'healthy-recipe/Screens/home/home.dart';
 
 class FlutterVizBottomNavigationBarModel {
   IconData icon;
@@ -33,6 +35,7 @@ class HomeScreen extends StatelessWidget {
         shape:RoundedRectangleBorder(
           borderRadius:BorderRadius.zero,
         ),
+
         title:Text(
           "Health Manager",
           style:TextStyle(
@@ -298,7 +301,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   void _navigateToHealthRecipeHome(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HealthRecipeHOME()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreenHR()));
   }
 
   void _navigateSleepPlanHome(BuildContext context) {
