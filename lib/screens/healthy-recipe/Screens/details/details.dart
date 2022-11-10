@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../Models/Item.dart';
-import '../../components/app_bar.dart';
 import '../../components/bottom_nav.dart';
 import '../../constants.dart';
 import 'components/ingredients.dart';
-import 'components/price_and_buy.dart';
-import 'components/qty_counter.dart';
 import 'components/title.dart';
 import 'components/vitamins.dart';
 
