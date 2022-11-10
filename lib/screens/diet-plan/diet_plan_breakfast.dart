@@ -1,24 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class BWTHOME extends StatefulWidget {
-  const BWTHOME({super.key});
+import 'diet_plan_breakfast_view.dart';
+
+class DietBreakfast extends StatefulWidget {
+  const DietBreakfast({Key? key}) : super(key: key);
 
   @override
-  State<BWTHOME> createState() => _BWTHOMEState();
+  State<DietBreakfast> createState() => _DietBreakfastState();
 }
 
-class _BWTHOMEState extends State<BWTHOME> {
+class _DietBreakfastState extends State<DietBreakfast> {
+// Text fields' controllers
+  final TextEditingController _topicController = TextEditingController();
+  final TextEditingController _ingredController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
-  // Text fields' controllers
-  final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+  final CollectionReference _dietBreakfast =
+  FirebaseFirestore.instance.collection('dietbreakfast');
 
-  final CollectionReference _weight =
-  FirebaseFirestore.instance.collection('weights');
-
-  // ADD WEIGHT FUNCTION
+  // ADD BREAKFAST FUNCTION
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
 
     await showModalBottomSheet(
@@ -36,40 +37,26 @@ class _BWTHOMEState extends State<BWTHOME> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
-                  controller: _weightController,
+                  controller: _topicController,
                   decoration: const InputDecoration(
-                      icon: Icon(Icons.man),
-                      labelText: 'Weight (Kg)'
+                      // icon: Icon(Icons.man),
+                      labelText: 'Topic'
                   ),
-                  keyboardType: TextInputType.number,
                 ),
                 TextField(
-                  controller: _dateController,
+                  controller: _ingredController,
                   decoration: const InputDecoration(
-                    icon: Icon(Icons.calendar_today),
-                      labelText: 'Date',
+                      // icon: Icon(Icons.man),
+                      labelText: 'Ingredients'
                   ),
-                  readOnly: true,
-                  onTap: () async{
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context, initialDate: DateTime.now(),
-                      firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2101)
-                    );
-                    if(pickedDate != null ){
-                      print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                      print(formattedDate); //formatted date output using intl package =>  2021-03-16
-
-                      setState(() {
-                        _dateController.text = formattedDate; //set output date to TextField value.
-                      });
-                    }else{
-                      print("Date is not selected");
-                    }
-                  },
                 ),
-
+                TextField(
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                      // icon: Icon(Icons.man),
+                      labelText: 'Description'
+                  ),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -86,12 +73,15 @@ class _BWTHOMEState extends State<BWTHOME> {
                     ),
                   ),
                   onPressed: () async {
-                    final String weight = _weightController.text;
-                    final String dates = _dateController.text;
-                    if (weight != null) {
-                      await _weight.add({"weight": weight, "date": dates});
-                      _weightController.text = '';
-                      _dateController.text = '';
+                    final String topic = _topicController.text;
+                    final String ingredients = _ingredController.text;
+                    final String description = _descriptionController.text;
+
+                    if (topic != null) {
+                      await _dietBreakfast.add({"topic": topic, "ingredients": ingredients, "description": description});
+                      _topicController.text = '';
+                      _ingredController.text = '';
+                      _descriptionController.text = '';
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Successfully Submitted')
@@ -105,12 +95,12 @@ class _BWTHOMEState extends State<BWTHOME> {
         });
   }
 
-  // UPDATE WEIGHT FUNCTION
+  // UPDATE BREAKFAST FUNCTION
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
-
-      _weightController.text = documentSnapshot['weight'];
-      _dateController.text = documentSnapshot['date'];
+      _topicController.text = documentSnapshot['topic'];
+      _ingredController.text = documentSnapshot['ingredients'];
+      _descriptionController.text = documentSnapshot['description'];
     }
 
     await showModalBottomSheet(
@@ -128,46 +118,30 @@ class _BWTHOMEState extends State<BWTHOME> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextField(
-                  controller: _weightController,
+                  controller: _topicController,
                   decoration: const InputDecoration(
-                      icon: Icon(Icons.man),
-                      labelText: 'Weight'),
-                  keyboardType: TextInputType.number,
-                  
+                      // icon: Icon(Icons.man),
+                      labelText: 'Topic'),
                 ),
                 TextField(
-                  controller: _dateController,
+                  controller: _ingredController,
                   decoration: const InputDecoration(
-                    icon: Icon(Icons.calendar_today),
-                    labelText: 'Date',
-                  ),
-                  readOnly: true,
-                  onTap: () async{
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context, initialDate: DateTime.now(),
-                        firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2101)
-                    );
-                    if(pickedDate != null ){
-                      print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                      print(formattedDate); //formatted date output using intl package =>  2021-03-16
-
-                      setState(() {
-                        _dateController.text = formattedDate; //set output date to TextField value.
-                      });
-                    }else{
-                      print("Date is not selected");
-                    }
-                  },
+                      // icon: Icon(Icons.man),
+                      labelText: 'Ingredients'),
+                ),
+                TextField(
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                      // icon: Icon(Icons.man),
+                      labelText: 'Description'),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 150),
-                    backgroundColor: Colors.orange
+                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 150),
+                      backgroundColor: Colors.orange
                   ),
                   child: const Text( 'Update',
                     style: TextStyle(
@@ -177,14 +151,16 @@ class _BWTHOMEState extends State<BWTHOME> {
                     ),
                   ),
                   onPressed: () async {
-                    final String weight = _weightController.text;
-                    final String dates = _dateController.text;
-                    if (weight != null) {
-                      await _weight
+                    final String topic = _topicController.text;
+                    final String ingredients = _ingredController.text;
+                    final String description = _descriptionController.text;
+                    if (topic != null) {
+                      await _dietBreakfast
                           .doc(documentSnapshot!.id)
-                          .update({"weight": weight, "date": dates});
-                      _weightController.text = '';
-                      _dateController.text = '';
+                          .update({"topic": topic, "ingredients": ingredients, "description": description});
+                      _topicController.text = '';
+                      _ingredController.text = '';
+                      _descriptionController.text = '';
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Successfully Updated')
@@ -200,15 +176,15 @@ class _BWTHOMEState extends State<BWTHOME> {
 
   // DELETE WEIGHT FUNCTION
   Future<void> _delete(String recordId) async {
-    await _weight.doc(recordId).delete();
-    _navigateToBodyWeightTrackerHome(context);
+    await _dietBreakfast.doc(recordId).delete();
+    // _navigateToBodyWeightTrackerHome(context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Successfully Deleted')
     )
     );
   }
 
-  // VIEW BODY WEIGHTS
+  // VIEW BREAKFAST
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +192,7 @@ class _BWTHOMEState extends State<BWTHOME> {
           title: Text("Health Manager"),
         ),
         body: StreamBuilder(
-          stream: _weight.snapshots(),
+          stream: _dietBreakfast.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
               return ListView.builder(
@@ -232,25 +208,36 @@ class _BWTHOMEState extends State<BWTHOME> {
                     ),
                     child: ListTile(
                       title: Text(
-                        documentSnapshot['weight'] + ' kg',
+                        documentSnapshot['topic'],
                         style: TextStyle(
-                        fontSize: 27,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      ),
-                      subtitle: Text(
-                        documentSnapshot['date'],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
+                          fontSize: 23,
+                          color: Colors.black,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                      // subtitle: Text(
+                      //   documentSnapshot['ingredients'],
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     color: Colors.grey,
+                      //     fontWeight: FontWeight.w600,
+                      //   ),
+                      // ),
                       trailing: SizedBox(
-                        width: 130,
+                        width: 192,
                         child: Row(
                           children: [
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Color(0xEFEFEFFF),
+                                shape: CircleBorder(),
+                              ),
+                              child: Icon(
+                                Icons.remove_red_eye,
+                                color: Colors.blue,
+                              ),
+                              onPressed: () => _navigateToDietBreakfastView(context),
+                            ),
                             TextButton(
                               style: TextButton.styleFrom(
                                 backgroundColor: Color(0xEFEFEFFF),
@@ -273,34 +260,34 @@ class _BWTHOMEState extends State<BWTHOME> {
                               ),
                               onPressed: () {
                                 // Delete Confirmation Message
-                                  // set up the buttons
-                                  Widget cancelButton = TextButton(
-                                    child: Text("Cancel"),
-                                    onPressed:  () {
-                                      _navigateToBodyWeightTrackerHome(context);
-                                    },
-                                  );
-                                  Widget continueButton = TextButton(
-                                    child: Text("Ok"),
-                                    onPressed: () => _delete(documentSnapshot.id),
-                                  );
+                                // set up the buttons
+                                Widget cancelButton = TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed:  () {
+                                    _navigateToDietBreakfastHome(context);
+                                  },
+                                );
+                                Widget continueButton = TextButton(
+                                  child: Text("Ok"),
+                                  onPressed: () => _delete(documentSnapshot.id),
+                                );
 
-                                  // set up the AlertDialog
-                                  AlertDialog alert = AlertDialog(
-                                    title: Text("Health Manager"),
-                                    content: Text("Are you sure want to delete?"),
-                                    actions: [
-                                      cancelButton,
-                                      continueButton,
-                                    ],
-                                  );
-                                  // show the dialog
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return alert;
-                                    },
-                                  );
+                                // set up the AlertDialog
+                                AlertDialog alert = AlertDialog(
+                                  title: Text("Health Manager"),
+                                  content: Text("Are you sure want to delete?"),
+                                  actions: [
+                                    cancelButton,
+                                    continueButton,
+                                  ],
+                                );
+                                // show the dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alert;
+                                  },
+                                );
                               },
                             ),
                           ],
@@ -325,7 +312,10 @@ class _BWTHOMEState extends State<BWTHOME> {
     );
   }
 
-  void _navigateToBodyWeightTrackerHome(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BWTHOME()));
+  void _navigateToDietBreakfastHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietBreakfast()));
+  }
+  void _navigateToDietBreakfastView(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietBreakfastView()));
   }
 }
