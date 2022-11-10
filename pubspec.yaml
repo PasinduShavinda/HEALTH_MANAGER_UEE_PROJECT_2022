@@ -37,6 +37,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   cloud_firestore: ^4.0.4
+  smooth_star_rating: ^1.1.1
+  get: ^4.6.5
+  flutter_rating_bar: ^4.0.0
+  smooth_star_rating_null_safety: ^1.0.4+2
+  intl: ^0.17.0
+  image_picker: ^0.8.6
+  firebase_storage: ^11.0.4
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -59,10 +67,15 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/body.png
+    - assets/doctor.png
+    - assets/head.png
+    - assets/skin.png
+    - assets/stomach.png
+    - assets/mental.png
+    - assets/otherSymptoms.jpg
 
-  # To add assets to your application, add an assets section, like this:
-#   assets:
-#     - assets/images/
 #     - assets/videos/
 #     - assets/audios/
 #     - assets/lottie_animations/
