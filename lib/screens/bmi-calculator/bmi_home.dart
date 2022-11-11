@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 import 'bmi-calculation.dart';
 import 'bmi-result.dart';
 
@@ -54,6 +55,7 @@ class _BMIHOMEState extends State<BMIHOME> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
       body: Column(
         children: [
           Row(

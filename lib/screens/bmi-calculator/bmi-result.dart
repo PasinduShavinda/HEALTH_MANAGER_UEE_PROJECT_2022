@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../healthy-recipe/components/bottom_nav.dart';
+
 class BMIResult extends StatefulWidget {
   String result;
   String msg;
@@ -40,6 +42,7 @@ class _BMIResultState extends State<BMIResult> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
       body: Column
         (
         mainAxisAlignment: MainAxisAlignment.center,

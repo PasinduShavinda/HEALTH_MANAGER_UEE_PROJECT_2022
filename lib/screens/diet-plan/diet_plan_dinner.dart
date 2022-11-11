@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'diet_plan_dinner_view.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class DietDinner extends StatefulWidget {
   const DietDinner({Key? key}) : super(key: key);
@@ -214,6 +215,7 @@ class _DietDinnerState extends State<DietDinner> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavBar(),
         body: StreamBuilder(
           stream: _dietDinner.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {

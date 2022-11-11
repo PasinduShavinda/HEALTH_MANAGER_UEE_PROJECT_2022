@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-
+import '../healthy-recipe/components/bottom_nav.dart';
 
 
 class SymptomsHistory extends StatefulWidget {
@@ -147,7 +147,7 @@ class _HomePageState extends State<SymptomsHistory> {
             ),
           ),
         ),
-
+        bottomNavigationBar: BottomNavBar(),
         body:
         StreamBuilder(
 

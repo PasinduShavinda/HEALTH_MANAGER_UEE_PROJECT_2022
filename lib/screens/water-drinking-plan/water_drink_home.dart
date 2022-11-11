@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class WaterDrinkHOME extends StatefulWidget {
   const WaterDrinkHOME({super.key});
@@ -38,6 +39,8 @@ class _WaterDrinkHOMEState extends State<WaterDrinkHOME> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavBar(),
+
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(20),

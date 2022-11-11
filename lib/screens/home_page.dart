@@ -11,6 +11,8 @@ import 'package:health_manager_uee_project_2022/screens/water-drinking-plan/wate
 import 'package:health_manager_uee_project_2022/screens/work-out-plan/work_out_home.dart';
 import 'bmi-calculator/bmi_home.dart';
 import 'healthy-recipe/Screens/home/home.dart';
+import 'healthy-recipe/components/bottom_nav.dart';
+
 
 class HomeScreen extends StatelessWidget {
 
@@ -36,6 +38,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
       body:
       Column(
         mainAxisAlignment:MainAxisAlignment.start,

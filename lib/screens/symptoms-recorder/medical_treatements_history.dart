@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
-
+import '../healthy-recipe/components/bottom_nav.dart';
 
 
 class TreatementHistory extends StatefulWidget {
@@ -134,7 +134,7 @@ class _HomePageState extends State<TreatementHistory> {
             ),
           ),
         ),
-
+        bottomNavigationBar: BottomNavBar(),
         body:
         StreamBuilder(
 

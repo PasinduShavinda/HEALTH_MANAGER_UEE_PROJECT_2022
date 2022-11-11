@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class MultiFileUplaodScreen extends StatefulWidget {
   const MultiFileUplaodScreen({Key? key}) : super(key: key);
@@ -47,6 +48,7 @@ class _MultiFileUplaodScreenState extends State<MultiFileUplaodScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
       body: Container(
         width: double.infinity,
         child: SingleChildScrollView(

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/diet-plan/diet_plan_lunch_view.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class DietLunch extends StatefulWidget {
   const DietLunch({Key? key}) : super(key: key);
@@ -213,6 +214,7 @@ class _DietLunchState extends State<DietLunch> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavBar(),
         body: StreamBuilder(
           stream: _dietLunch.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {

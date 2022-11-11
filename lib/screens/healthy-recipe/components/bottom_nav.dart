@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../home_page.dart';
 import '../constants.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -14,7 +15,7 @@ class BottomNavBar extends StatelessWidget {
       height: 70.0,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.purple[100],
+          color:Color(0xffc396e5),
         borderRadius: BorderRadius.circular(25)
       ),
        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding * 1.5),
@@ -23,7 +24,9 @@ class BottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           NavItem(
-            tap: () {},
+            tap: () {
+              _navigateToHomepage(context);
+            },
             icon: 'assets/icons/home.svg',
           ),
 
@@ -64,4 +67,8 @@ class NavItem extends StatelessWidget {
       child: SvgPicture.asset(icon),
     );
   }
+}
+
+void _navigateToHomepage(BuildContext context) {
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
 }

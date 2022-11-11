@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class MealLunchView extends StatefulWidget {
   const MealLunchView({Key? key}) : super(key: key);
@@ -43,6 +44,7 @@ class _MealLunchViewState extends State<MealLunchView> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavBar(),
         body: StreamBuilder(
           stream: _mealLunch.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {

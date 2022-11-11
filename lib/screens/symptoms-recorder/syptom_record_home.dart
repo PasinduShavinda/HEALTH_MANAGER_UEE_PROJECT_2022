@@ -7,7 +7,7 @@ import 'doctor_treatments_home_page.dart';
 import 'headsymptoms.dart';
 import 'mentalsymptoms.dart';
 import 'skinsymptoms.dart';
-
+import '../healthy-recipe/components/bottom_nav.dart';
 
 
 
@@ -50,6 +50,7 @@ class _SyptRecordHOMEState extends State<SyptRecordHOME> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavBar(),
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(10),

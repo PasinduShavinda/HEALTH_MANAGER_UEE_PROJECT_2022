@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class SleepPlanHOME extends StatefulWidget {
   const SleepPlanHOME({super.key});
@@ -38,6 +39,7 @@ class _SleepPlanHOMEState extends State<SleepPlanHOME> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavBar(),
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(20),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
+import '../healthy-recipe/components/bottom_nav.dart';
+
 class BWTHOME extends StatefulWidget {
   const BWTHOME({super.key});
 
@@ -238,6 +240,7 @@ class _BWTHOMEState extends State<BWTHOME> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavBar(),
         body: StreamBuilder(
           stream: _weight.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {

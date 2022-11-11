@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:dotted_border/dotted_border.dart';
-
+import '../healthy-recipe/components/bottom_nav.dart';
 import 'medical_treatements_history.dart';
 
 class MedicalNote extends StatefulWidget{
@@ -60,7 +60,7 @@ class _MedicalNoteState extends State<MedicalNote>{
           ),
         ),
       ),
-
+      bottomNavigationBar: BottomNavBar(),
       body: Container(
 
 

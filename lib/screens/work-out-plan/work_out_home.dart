@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class WorkOutHOME extends StatefulWidget {
   const WorkOutHOME({super.key});
@@ -38,6 +39,7 @@ class _WorkOutHOMEState extends State<WorkOutHOME> {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavBar(),
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(20),
