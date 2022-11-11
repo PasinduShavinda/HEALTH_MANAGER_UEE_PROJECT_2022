@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +15,6 @@ class MedicalNote extends StatefulWidget{
 
   @override
   _MedicalNoteState createState() =>_MedicalNoteState();
-
 
 }
 
@@ -35,9 +35,30 @@ class _MedicalNoteState extends State<MedicalNote>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Health Manager"),
+      appBar:
+      AppBar(
+        leading: IconButton(
+            icon: SvgPicture.asset('assets/icons/back.svg'),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
+        elevation:4,
+        centerTitle:false,
+        automaticallyImplyLeading: false,
         backgroundColor:Color(0xffc396e5),
+        shape:RoundedRectangleBorder(
+          borderRadius:BorderRadius.zero,
+        ),
+        title:Text(
+          "Health Manager",
+          style:TextStyle(
+            fontWeight:FontWeight.w800,
+            fontStyle:FontStyle.normal,
+            fontSize:17,
+            color:Color(0xffffffff),
+          ),
+        ),
       ),
 
       body: Container(

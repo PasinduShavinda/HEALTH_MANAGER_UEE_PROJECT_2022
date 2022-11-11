@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class BMIResult extends StatefulWidget {
   String result;
@@ -14,8 +15,30 @@ class _BMIResultState extends State<BMIResult> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF2F2E3A),
-      appBar: AppBar(
-        title: Text("BMI Result"),
+      appBar:
+      AppBar(
+        leading: IconButton(
+            icon: SvgPicture.asset('assets/icons/back.svg'),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
+        elevation:4,
+        centerTitle:false,
+        automaticallyImplyLeading: false,
+        backgroundColor:Color(0xffc396e5),
+        shape:RoundedRectangleBorder(
+          borderRadius:BorderRadius.zero,
+        ),
+        title:Text(
+          "Health Manager",
+          style:TextStyle(
+            fontWeight:FontWeight.w800,
+            fontStyle:FontStyle.normal,
+            fontSize:17,
+            color:Color(0xffffffff),
+          ),
+        ),
       ),
       body: Column
         (

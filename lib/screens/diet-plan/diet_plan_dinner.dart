@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'diet_plan_dinner_view.dart';
 
@@ -188,8 +189,30 @@ class _DietDinnerState extends State<DietDinner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Health Manager"),
+        appBar:
+        AppBar(
+          leading: IconButton(
+              icon: SvgPicture.asset('assets/icons/back.svg'),
+              onPressed: () {
+                Navigator.pop(context);
+              }
+          ),
+          elevation:4,
+          centerTitle:false,
+          automaticallyImplyLeading: false,
+          backgroundColor:Color(0xffc396e5),
+          shape:RoundedRectangleBorder(
+            borderRadius:BorderRadius.zero,
+          ),
+          title:Text(
+            "Health Manager",
+            style:TextStyle(
+              fontWeight:FontWeight.w800,
+              fontStyle:FontStyle.normal,
+              fontSize:17,
+              color:Color(0xffffffff),
+            ),
+          ),
         ),
         body: StreamBuilder(
           stream: _dietDinner.snapshots(),

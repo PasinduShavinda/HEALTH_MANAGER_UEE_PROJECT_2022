@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/daily-meal-plan/daily_meal_plan_lunch.dart';
 import 'daily_meal_plan_breakfast.dart';
 import 'daily_meal_plan_dinner.dart';
@@ -18,6 +19,12 @@ class _DMPHOMEState extends State<DMPHOME> {
       backgroundColor: Color(0xffffffff),
       appBar:
       AppBar(
+        leading: IconButton(
+            icon: SvgPicture.asset('assets/icons/back.svg'),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
         elevation:4,
         centerTitle:false,
         automaticallyImplyLeading: false,
@@ -25,7 +32,6 @@ class _DMPHOMEState extends State<DMPHOME> {
         shape:RoundedRectangleBorder(
           borderRadius:BorderRadius.zero,
         ),
-
         title:Text(
           "Health Manager",
           style:TextStyle(

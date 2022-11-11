@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/diet-plan/diet_plan_lunch_view.dart';
 
 class DietLunch extends StatefulWidget {
@@ -187,8 +188,30 @@ class _DietLunchState extends State<DietLunch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Health Manager"),
+        appBar:
+        AppBar(
+          leading: IconButton(
+              icon: SvgPicture.asset('assets/icons/back.svg'),
+              onPressed: () {
+                Navigator.pop(context);
+              }
+          ),
+          elevation:4,
+          centerTitle:false,
+          automaticallyImplyLeading: false,
+          backgroundColor:Color(0xffc396e5),
+          shape:RoundedRectangleBorder(
+            borderRadius:BorderRadius.zero,
+          ),
+          title:Text(
+            "Health Manager",
+            style:TextStyle(
+              fontWeight:FontWeight.w800,
+              fontStyle:FontStyle.normal,
+              fontSize:17,
+              color:Color(0xffffffff),
+            ),
+          ),
         ),
         body: StreamBuilder(
           stream: _dietLunch.snapshots(),

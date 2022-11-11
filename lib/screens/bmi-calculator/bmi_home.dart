@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'bmi-calculation.dart';
 import 'bmi-result.dart';
@@ -28,8 +29,30 @@ class _BMIHOMEState extends State<BMIHOME> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Health Manager"),
+      appBar:
+      AppBar(
+        leading: IconButton(
+            icon: SvgPicture.asset('assets/icons/back.svg'),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
+        elevation:4,
+        centerTitle:false,
+        automaticallyImplyLeading: false,
+        backgroundColor:Color(0xffc396e5),
+        shape:RoundedRectangleBorder(
+          borderRadius:BorderRadius.zero,
+        ),
+        title:Text(
+          "Health Manager",
+          style:TextStyle(
+            fontWeight:FontWeight.w800,
+            fontStyle:FontStyle.normal,
+            fontSize:17,
+            color:Color(0xffffffff),
+          ),
+        ),
       ),
       body: Column(
         children: [
