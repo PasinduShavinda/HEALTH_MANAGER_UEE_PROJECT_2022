@@ -93,6 +93,7 @@ class DietPlanHOME extends StatelessWidget {
                         bottomRight: Radius.circular(12.0)),
                     border: Border.all(color: Color(0x4d9e9e9e), width: 1),
                   ),
+
                   child: Text(
                     "Breakfast",
                     textAlign: TextAlign.start,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../healthy-recipe/components/bottom_nav.dart';
 
@@ -109,28 +110,31 @@ class _BMIResultState extends State<BMIResult> {
           ),
           Expanded(
               child: GestureDetector(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 38, 39, 215),
+                  ),
+                  padding: EdgeInsets.only(bottom: 10.0),
+                  margin: EdgeInsets.only(bottom:25.0),
+                  width: 280,
+                  height: 51.0,
+                  // color: Color.fromARGB(255, 0, 1, 87),
+                  child: Center(
+                    child: Text(
+                      "Re-Calculate",
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                ),
                 onTap: (){
                   Navigator.pop(context);
                 },
-              child:
-              Container(
-
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(30.0),
-                color: Color(0xffc396e5),
-                margin: EdgeInsets.only(
-                    //bottom: 1.0,
-                    top: 40.0
-                ),
-                child: Text(
-                  "Re calculate",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25.0
-                  ),
-                ),
               ),
-              )
           ),
         ],
       ),

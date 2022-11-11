@@ -218,7 +218,7 @@ class _MealBreakfastState extends State<MealBreakfast> {
   // DELETE BREAKFAST FUNCTION
   Future<void> _delete(String recordId) async {
     await _mealBreakfast.doc(recordId).delete();
-    // _navigateToBodyWeightTrackerHome(context);
+    Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Successfully Deleted')
     )
@@ -328,7 +328,7 @@ class _MealBreakfastState extends State<MealBreakfast> {
                                 Widget cancelButton = TextButton(
                                   child: Text("Cancel"),
                                   onPressed:  () {
-                                    _navigateToMealBreakfastHome(context);
+                                    Navigator.pop(context);
                                   },
                                 );
                                 Widget continueButton = TextButton(

@@ -375,16 +375,20 @@ class _BMIHOMEState extends State<BMIHOME> {
 
           GestureDetector(
             child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color.fromARGB(255, 0, 1, 87),
+              ),
               padding: EdgeInsets.only(bottom: 10.0),
-              margin: EdgeInsets.only(top:10.0),
-              width: double.infinity,
-              height: 80.0,
-              color:Color(0xffc396e5),
+              margin: EdgeInsets.only(bottom:25.0),
+              width: 280,
+              height: 51.0,
+              // color: Color.fromARGB(255, 0, 1, 87),
               child: Center(
                 child: Text(
                   "Calculate",
                     style: TextStyle(
-                    fontSize: 26.0,
+                    fontSize: 18.0,
                     color: Colors.white,
                     fontWeight: FontWeight.bold
                 ),

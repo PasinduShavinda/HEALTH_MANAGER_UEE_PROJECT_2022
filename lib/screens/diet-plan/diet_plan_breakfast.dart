@@ -175,10 +175,10 @@ class _DietBreakfastState extends State<DietBreakfast> {
         });
   }
 
-  // DELETE WEIGHT FUNCTION
+  // DELETE BREAKFAST FUNCTION
   Future<void> _delete(String recordId) async {
     await _dietBreakfast.doc(recordId).delete();
-    // _navigateToBodyWeightTrackerHome(context);
+    Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Successfully Deleted')
     )
@@ -288,7 +288,7 @@ class _DietBreakfastState extends State<DietBreakfast> {
                                 Widget cancelButton = TextButton(
                                   child: Text("Cancel"),
                                   onPressed:  () {
-                                    _navigateToDietBreakfastHome(context);
+                                    Navigator.pop(context);
                                   },
                                 );
                                 Widget continueButton = TextButton(
