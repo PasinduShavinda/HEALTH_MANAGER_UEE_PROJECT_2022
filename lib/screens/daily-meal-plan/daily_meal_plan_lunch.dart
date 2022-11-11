@@ -1,25 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'daily_meal_plan_lunch_view.dart';
 
-import 'diet_plan_dinner_view.dart';
-
-class DietDinner extends StatefulWidget {
-  const DietDinner({Key? key}) : super(key: key);
+class MealLunch extends StatefulWidget {
+  const MealLunch({Key? key}) : super(key: key);
 
   @override
-  State<DietDinner> createState() => _DietDinnerState();
+  State<MealLunch> createState() => _MealLunchState();
 }
 
-class _DietDinnerState extends State<DietDinner> {
+class _MealLunchState extends State<MealLunch> {
   // Text fields' controllers
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _ingredController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
-  final CollectionReference _dietDinner =
-  FirebaseFirestore.instance.collection('dietdinner');
+  final CollectionReference _mealLunch =
+  FirebaseFirestore.instance.collection('meallunch');
 
-  // ADD DINNER FUNCTION
+  // ADD LUNCH FUNCTION
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
 
     await showModalBottomSheet(
@@ -57,6 +58,31 @@ class _DietDinnerState extends State<DietDinner> {
                       labelText: 'Description'
                   ),
                 ),
+                TextField(
+                  controller: _dateController,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    labelText: 'Date',
+                  ),
+                  readOnly: true,
+                  onTap: () async{
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context, initialDate: DateTime.now(),
+                        firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101)
+                    );
+                    if(pickedDate != null ){
+                      print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                      setState(() {
+                        _dateController.text = formattedDate; //set output date to TextField value.
+                      });
+                    }else{
+                      print("Date is not selected");
+                    }
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -76,12 +102,15 @@ class _DietDinnerState extends State<DietDinner> {
                     final String topic = _topicController.text;
                     final String ingredients = _ingredController.text;
                     final String description = _descriptionController.text;
+                    final String date = _dateController.text;
+
 
                     if (topic != null) {
-                      await _dietDinner.add({"topic": topic, "ingredients": ingredients, "description": description});
+                      await _mealLunch.add({"topic": topic, "ingredients": ingredients, "description": description, "date": date});
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
+                      _dateController.text = '';
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Successfully Submitted')
@@ -95,12 +124,13 @@ class _DietDinnerState extends State<DietDinner> {
         });
   }
 
-  // UPDATE DINNER FUNCTION
+  // UPDATE LUNCH FUNCTION
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
       _topicController.text = documentSnapshot['topic'];
       _ingredController.text = documentSnapshot['ingredients'];
       _descriptionController.text = documentSnapshot['description'];
+      _dateController.text = documentSnapshot['date'];
     }
 
     await showModalBottomSheet(
@@ -135,6 +165,32 @@ class _DietDinnerState extends State<DietDinner> {
                     // icon: Icon(Icons.man),
                       labelText: 'Description'),
                 ),
+                TextField(
+                  controller: _dateController,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    labelText: 'Date',
+                  ),
+                  readOnly: true,
+                  onTap: () async{
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context, initialDate: DateTime.now(),
+                        firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101)
+                    );
+                    if(pickedDate != null ){
+                      print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(formattedDate); //formatted date output using intl package =>  2021-03-16
+
+                      setState(() {
+                        _dateController.text = formattedDate; //set output date to TextField value.
+                      });
+                    }else{
+                      print("Date is not selected");
+                    }
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -143,7 +199,7 @@ class _DietDinnerState extends State<DietDinner> {
                       padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 150),
                       backgroundColor: Colors.orange
                   ),
-                  child: const Text( 'Update',
+                  child: const Text('Update',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
@@ -154,13 +210,15 @@ class _DietDinnerState extends State<DietDinner> {
                     final String topic = _topicController.text;
                     final String ingredients = _ingredController.text;
                     final String description = _descriptionController.text;
+                    final String date = _dateController.text;
                     if (topic != null) {
-                      await _dietDinner
+                      await _mealLunch
                           .doc(documentSnapshot!.id)
-                          .update({"topic": topic, "ingredients": ingredients, "description": description});
+                          .update({"topic": topic, "ingredients": ingredients, "description": description, "date": date});
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
+                      _dateController.text = '';
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Successfully Updated')
@@ -174,9 +232,9 @@ class _DietDinnerState extends State<DietDinner> {
         });
   }
 
-  // DELETE DINNER FUNCTION
+  // DELETE LUNCH FUNCTION
   Future<void> _delete(String recordId) async {
-    await _dietDinner.doc(recordId).delete();
+    await _mealLunch.doc(recordId).delete();
     // _navigateToBodyWeightTrackerHome(context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Successfully Deleted')
@@ -184,7 +242,7 @@ class _DietDinnerState extends State<DietDinner> {
     );
   }
 
-  // VIEW DINNER
+  // VIEW LUNCH
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,7 +250,7 @@ class _DietDinnerState extends State<DietDinner> {
           title: Text("Health Manager"),
         ),
         body: StreamBuilder(
-          stream: _dietDinner.snapshots(),
+          stream: _mealLunch.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
               return ListView.builder(
@@ -215,6 +273,14 @@ class _DietDinnerState extends State<DietDinner> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                      subtitle: Text(
+                        documentSnapshot['date'],
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       trailing: SizedBox(
                         width: 192,
                         child: Row(
@@ -228,7 +294,7 @@ class _DietDinnerState extends State<DietDinner> {
                                 Icons.remove_red_eye,
                                 color: Colors.blue,
                               ),
-                              onPressed: () => _navigateToDietDinnerView(context),
+                              onPressed: () => _navigateToMealLunchView(context),
                             ),
                             TextButton(
                               style: TextButton.styleFrom(
@@ -256,7 +322,7 @@ class _DietDinnerState extends State<DietDinner> {
                                 Widget cancelButton = TextButton(
                                   child: Text("Cancel"),
                                   onPressed:  () {
-                                    _navigateToDietDinnerHome(context);
+                                    _navigateToMealLunchHome(context);
                                   },
                                 );
                                 Widget continueButton = TextButton(
@@ -304,10 +370,10 @@ class _DietDinnerState extends State<DietDinner> {
     );
   }
 
-  void _navigateToDietDinnerHome(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDinner()));
+  void _navigateToMealLunchHome(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MealLunch()));
   }
-  void _navigateToDietDinnerView(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDinnerView()));
+  void _navigateToMealLunchView(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MealLunchView()));
   }
 }

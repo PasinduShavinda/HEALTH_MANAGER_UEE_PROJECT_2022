@@ -1,19 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:health_manager_uee_project_2022/screens/diet-plan/diet_plan_dinner.dart';
 
-class DietBreakfastView extends StatefulWidget {
-  const DietBreakfastView({Key? key}) : super(key: key);
+class DietDinnerView extends StatefulWidget {
+  const DietDinnerView({Key? key}) : super(key: key);
 
   @override
-  State<DietBreakfastView> createState() => _DietBreakfastViewState();
+  State<DietDinnerView> createState() => _DietDinnerViewState();
 }
 
-class _DietBreakfastViewState extends State<DietBreakfastView> {
+class _DietDinnerViewState extends State<DietDinnerView> {
 
-  final CollectionReference _dietBreakfast =
-  FirebaseFirestore.instance.collection('dietbreakfast');
+  final CollectionReference _dietDinner =
+  FirebaseFirestore.instance.collection('dietdinner');
 
-  // VIEW BREAKFAST
+  // VIEW DINNER
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +22,7 @@ class _DietBreakfastViewState extends State<DietBreakfastView> {
           title: Text("Health Manager"),
         ),
         body: StreamBuilder(
-          stream: _dietBreakfast.snapshots(),
+          stream: _dietDinner.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
               return ListView.builder(

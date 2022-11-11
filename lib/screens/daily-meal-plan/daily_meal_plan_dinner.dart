@@ -1,23 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-import 'diet_plan_dinner_view.dart';
+import 'daily_meal_plan_dinner_view.dart';
 
-class DietDinner extends StatefulWidget {
-  const DietDinner({Key? key}) : super(key: key);
+class MealDinner extends StatefulWidget {
+  const MealDinner({Key? key}) : super(key: key);
 
   @override
-  State<DietDinner> createState() => _DietDinnerState();
+  State<MealDinner> createState() => _MealDinnerState();
 }
 
-class _DietDinnerState extends State<DietDinner> {
+class _MealDinnerState extends State<MealDinner> {
   // Text fields' controllers
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _ingredController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
-  final CollectionReference _dietDinner =
-  FirebaseFirestore.instance.collection('dietdinner');
+  final CollectionReference _mealDinner =
+  FirebaseFirestore.instance.collection('mealdinner');
 
   // ADD DINNER FUNCTION
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
@@ -57,6 +59,32 @@ class _DietDinnerState extends State<DietDinner> {
                       labelText: 'Description'
                   ),
                 ),
+                TextField(
+                  controller: _dateController,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    labelText: 'Date',
+                  ),
+                  readOnly: true,
+                  onTap: () async{
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context, initialDate: DateTime.now(),
+                        firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101)
+                    );
+                    if(pickedDate != null ){
+                      print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                      setState(() {
+                        _dateController.text = formattedDate; //set output date to TextField value.
+                      });
+                    }else{
+                      print("Date is not selected");
+                    }
+                  },
+                ),
+
                 const SizedBox(
                   height: 20,
                 ),
@@ -76,12 +104,14 @@ class _DietDinnerState extends State<DietDinner> {
                     final String topic = _topicController.text;
                     final String ingredients = _ingredController.text;
                     final String description = _descriptionController.text;
+                    final String date = _dateController.text;
 
                     if (topic != null) {
-                      await _dietDinner.add({"topic": topic, "ingredients": ingredients, "description": description});
+                      await _mealDinner.add({"topic": topic, "ingredients": ingredients, "description": description, "date": date});
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
+                      _dateController.text = '';
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Successfully Submitted')
@@ -101,6 +131,7 @@ class _DietDinnerState extends State<DietDinner> {
       _topicController.text = documentSnapshot['topic'];
       _ingredController.text = documentSnapshot['ingredients'];
       _descriptionController.text = documentSnapshot['description'];
+      _dateController.text = documentSnapshot['date'];
     }
 
     await showModalBottomSheet(
@@ -135,6 +166,32 @@ class _DietDinnerState extends State<DietDinner> {
                     // icon: Icon(Icons.man),
                       labelText: 'Description'),
                 ),
+                TextField(
+                  controller: _dateController,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    labelText: 'Date',
+                  ),
+                  readOnly: true,
+                  onTap: () async{
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context, initialDate: DateTime.now(),
+                        firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101)
+                    );
+                    if(pickedDate != null ){
+                      print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(formattedDate); //formatted date output using intl package =>  2021-03-16
+
+                      setState(() {
+                        _dateController.text = formattedDate; //set output date to TextField value.
+                      });
+                    }else{
+                      print("Date is not selected");
+                    }
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -154,13 +211,15 @@ class _DietDinnerState extends State<DietDinner> {
                     final String topic = _topicController.text;
                     final String ingredients = _ingredController.text;
                     final String description = _descriptionController.text;
+                    final String date = _dateController.text;
                     if (topic != null) {
-                      await _dietDinner
+                      await _mealDinner
                           .doc(documentSnapshot!.id)
-                          .update({"topic": topic, "ingredients": ingredients, "description": description});
+                          .update({"topic": topic, "ingredients": ingredients, "description": description, "date": date});
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
+                      _dateController.text = '';
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Successfully Updated')
@@ -176,8 +235,8 @@ class _DietDinnerState extends State<DietDinner> {
 
   // DELETE DINNER FUNCTION
   Future<void> _delete(String recordId) async {
-    await _dietDinner.doc(recordId).delete();
-    // _navigateToBodyWeightTrackerHome(context);
+    await _mealDinner.doc(recordId).delete();
+    _navigateToDietDinnerHome(context);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Successfully Deleted')
     )
@@ -192,7 +251,7 @@ class _DietDinnerState extends State<DietDinner> {
           title: Text("Health Manager"),
         ),
         body: StreamBuilder(
-          stream: _dietDinner.snapshots(),
+          stream: _mealDinner.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
               return ListView.builder(
@@ -212,6 +271,14 @@ class _DietDinnerState extends State<DietDinner> {
                         style: TextStyle(
                           fontSize: 23,
                           color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        documentSnapshot['date'],
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -305,7 +372,7 @@ class _DietDinnerState extends State<DietDinner> {
   }
 
   void _navigateToDietDinnerHome(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDinner()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MealDinner()));
   }
   void _navigateToDietDinnerView(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => DietDinnerView()));
