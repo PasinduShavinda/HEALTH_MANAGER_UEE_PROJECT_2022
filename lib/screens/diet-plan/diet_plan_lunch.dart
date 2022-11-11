@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:health_manager_uee_project_2022/screens/diet-plan/diet_plan_lunch_view.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
 
@@ -79,14 +81,13 @@ class _DietLunchState extends State<DietLunch> {
                     final String description = _descriptionController.text;
 
                     if (topic != null) {
-                      await _dietLunch.add({"topic": topic, "ingredients": ingredients, "description": description});
+                      await _dietLunch.add({"topic": topic, "ingredients": ingredients, "description": description}).then((value) {
+                        Get.snackbar('Success', 'Successfully Saved');
+                      });
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Submitted')
-                      ));
                     }
                   },
                 )
@@ -158,14 +159,13 @@ class _DietLunchState extends State<DietLunch> {
                     if (topic != null) {
                       await _dietLunch
                           .doc(documentSnapshot!.id)
-                          .update({"topic": topic, "ingredients": ingredients, "description": description});
+                          .update({"topic": topic, "ingredients": ingredients, "description": description}).then((value) {
+                        Get.snackbar('Success', 'Successfully Updated');
+                      });
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Updated')
-                      ));
                     }
                   },
                 )
@@ -175,14 +175,12 @@ class _DietLunchState extends State<DietLunch> {
         });
   }
 
-  // DELETE WEIGHT FUNCTION
+  // DELETE LUNCH FUNCTION
   Future<void> _delete(String recordId) async {
-    await _dietLunch.doc(recordId).delete();
+    await _dietLunch.doc(recordId).delete().then((value) {
+      Get.snackbar('Success', 'Successfully Deleted');
+    });
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Successfully Deleted')
-    )
-    );
   }
 
   // VIEW BREAKFAST

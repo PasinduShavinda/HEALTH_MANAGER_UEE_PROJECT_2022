@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'diet_plan_dinner_view.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
@@ -80,14 +82,13 @@ class _DietDinnerState extends State<DietDinner> {
                     final String description = _descriptionController.text;
 
                     if (topic != null) {
-                      await _dietDinner.add({"topic": topic, "ingredients": ingredients, "description": description});
+                      await _dietDinner.add({"topic": topic, "ingredients": ingredients, "description": description}).then((value) {
+                        Get.snackbar('Success', 'Successfully Saved');
+                      });
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Submitted')
-                      ));
                     }
                   },
                 )
@@ -159,14 +160,13 @@ class _DietDinnerState extends State<DietDinner> {
                     if (topic != null) {
                       await _dietDinner
                           .doc(documentSnapshot!.id)
-                          .update({"topic": topic, "ingredients": ingredients, "description": description});
+                          .update({"topic": topic, "ingredients": ingredients, "description": description}).then((value) {
+                        Get.snackbar('Success', 'Successfully Updated');
+                      });
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Updated')
-                      ));
                     }
                   },
                 )
@@ -178,12 +178,10 @@ class _DietDinnerState extends State<DietDinner> {
 
   // DELETE DINNER FUNCTION
   Future<void> _delete(String recordId) async {
-    await _dietDinner.doc(recordId).delete();
+    await _dietDinner.doc(recordId).delete().then((value) {
+      Get.snackbar('Success', 'Successfully Deleted');
+    });
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Successfully Deleted')
-    )
-    );
   }
 
   // VIEW DINNER

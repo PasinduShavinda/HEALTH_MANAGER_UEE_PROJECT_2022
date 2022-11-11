@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../healthy-recipe/components/bottom_nav.dart';
@@ -92,13 +94,12 @@ class _BWTHOMEState extends State<BWTHOME> {
                     final String weight = _weightController.text;
                     final String dates = _dateController.text;
                     if (weight != null) {
-                      await _weight.add({"weight": weight, "date": dates});
+                      await _weight.add({"weight": weight, "date": dates}).then((value) {
+                        Get.snackbar('Success', 'Successfully Saved');
+                      });
                       _weightController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Submitted')
-                      ));
                     }
                   },
                 )
@@ -185,7 +186,9 @@ class _BWTHOMEState extends State<BWTHOME> {
                     if (weight != null) {
                       await _weight
                           .doc(documentSnapshot!.id)
-                          .update({"weight": weight, "date": dates});
+                          .update({"weight": weight, "date": dates}).then((value) {
+                        Get.snackbar('Success', 'Successfully Updated');
+                      });
                       _weightController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
@@ -203,12 +206,10 @@ class _BWTHOMEState extends State<BWTHOME> {
 
   // DELETE WEIGHT FUNCTION
   Future<void> _delete(String recordId) async {
-    await _weight.doc(recordId).delete();
+    await _weight.doc(recordId).delete().then((value) {
+      Get.snackbar('Success', 'Successfully Deleted');
+    });
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Successfully Deleted')
-    )
-    );
   }
 
   // VIEW BODY WEIGHTS

@@ -5,11 +5,11 @@ class CalResult{
   final int height;
   final int weight;
   double result = 0.0;
-  String msg = 'Normal';
+  String msg = '';
 
   String calResult(){
     result = weight/pow(height/100, 2);
-    return result.toStringAsFixed(1);
+    return result.toStringAsFixed(2);
   }
 
   String getDescription(){

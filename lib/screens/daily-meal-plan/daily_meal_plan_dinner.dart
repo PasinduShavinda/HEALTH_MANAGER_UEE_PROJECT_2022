@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import 'daily_meal_plan_dinner_view.dart';
@@ -109,15 +111,14 @@ class _MealDinnerState extends State<MealDinner> {
                     final String date = _dateController.text;
 
                     if (topic != null) {
-                      await _mealDinner.add({"topic": topic, "ingredients": ingredients, "description": description, "date": date});
+                      await _mealDinner.add({"topic": topic, "ingredients": ingredients, "description": description, "date": date}).then((value) {
+                        Get.snackbar('Success', 'Successfully Saved');
+                      });
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Submitted')
-                      ));
                     }
                   },
                 )
@@ -217,15 +218,14 @@ class _MealDinnerState extends State<MealDinner> {
                     if (topic != null) {
                       await _mealDinner
                           .doc(documentSnapshot!.id)
-                          .update({"topic": topic, "ingredients": ingredients, "description": description, "date": date});
+                          .update({"topic": topic, "ingredients": ingredients, "description": description, "date": date}).then((value) {
+                        Get.snackbar('Success', 'Successfully Updated');
+                      });
                       _topicController.text = '';
                       _ingredController.text = '';
                       _descriptionController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Updated')
-                      ));
                     }
                   },
                 )
@@ -237,12 +237,10 @@ class _MealDinnerState extends State<MealDinner> {
 
   // DELETE DINNER FUNCTION
   Future<void> _delete(String recordId) async {
-    await _mealDinner.doc(recordId).delete();
+    await _mealDinner.doc(recordId).delete().then((value) {
+      Get.snackbar('Success', 'Successfully Deleted');
+    });
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Successfully Deleted')
-    )
-    );
   }
 
   // VIEW DINNER
