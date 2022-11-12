@@ -110,7 +110,7 @@ class _MealDinnerState extends State<MealDinner> {
                     final String description = _descriptionController.text;
                     final String date = _dateController.text;
 
-                    if (topic != null) {
+                    if (_topicController.value.text.isNotEmpty && _dateController.value.text.isNotEmpty) {
                       await _mealDinner.add({"topic": topic, "ingredients": ingredients, "description": description, "date": date}).then((value) {
                         Get.snackbar('Success', 'Successfully Saved');
                       });
@@ -119,6 +119,14 @@ class _MealDinnerState extends State<MealDinner> {
                       _descriptionController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
+                    }
+                    else{
+                      if(_topicController.value.text.isEmpty){
+                        Get.snackbar('Failed', 'Topic Cannot Be Empty');
+                      }
+                      else if(_dateController.value.text.isEmpty){
+                        Get.snackbar('Failed', 'Date Cannot Be Empty');
+                      }
                     }
                   },
                 )

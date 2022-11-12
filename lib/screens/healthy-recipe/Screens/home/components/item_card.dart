@@ -49,7 +49,14 @@ class ItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item.name
+                        item.name,
+                        textAlign: TextAlign.center,
+                        style:TextStyle(
+                          fontWeight:FontWeight.w700,
+                          fontStyle:FontStyle.italic,
+                          fontSize:24,
+                          color:Color(0xff000000),
+                        ),
                       ),
                     ],
                   ),

@@ -93,13 +93,21 @@ class _BWTHOMEState extends State<BWTHOME> {
                   onPressed: () async {
                     final String weight = _weightController.text;
                     final String dates = _dateController.text;
-                    if (weight != null) {
+                    if (_weightController.value.text.isNotEmpty && _dateController.value.text.isNotEmpty) {
                       await _weight.add({"weight": weight, "date": dates}).then((value) {
                         Get.snackbar('Success', 'Successfully Saved');
                       });
                       _weightController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
+                    }
+                    else{
+                      if(_weightController.value.text.isEmpty){
+                        Get.snackbar('Failed', 'Weight Cannot Be Empty');
+                      }
+                      else{
+                        Get.snackbar('Failed', 'Date Cannot Be Empty');
+                      }
                     }
                   },
                 )
@@ -192,9 +200,6 @@ class _BWTHOMEState extends State<BWTHOME> {
                       _weightController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Updated')
-                      ));
                     }
                   },
                 )

@@ -81,7 +81,7 @@ class _DietDinnerState extends State<DietDinner> {
                     final String ingredients = _ingredController.text;
                     final String description = _descriptionController.text;
 
-                    if (topic != null) {
+                    if (_topicController.value.text.isNotEmpty && _ingredController.value.text.isNotEmpty && _descriptionController.value.text.isNotEmpty) {
                       await _dietDinner.add({"topic": topic, "ingredients": ingredients, "description": description}).then((value) {
                         Get.snackbar('Success', 'Successfully Saved');
                       });
@@ -89,6 +89,17 @@ class _DietDinnerState extends State<DietDinner> {
                       _ingredController.text = '';
                       _descriptionController.text = '';
                       Navigator.of(context).pop();
+                    }
+                    else{
+                      if(_topicController.value.text.isEmpty){
+                        Get.snackbar('Failed', 'Topic Cannot Be Empty');
+                      }
+                      else if(_ingredController.value.text.isEmpty){
+                        Get.snackbar('Failed', 'Ingredients Cannot Be Empty');
+                      }
+                      else{
+                        Get.snackbar('Failed', 'Description Cannot Be Empty');
+                      }
                     }
                   },
                 )

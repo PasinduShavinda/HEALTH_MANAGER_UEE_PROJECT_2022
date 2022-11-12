@@ -15,7 +15,7 @@ class MealBreakfast extends StatefulWidget {
 }
 
 class _MealBreakfastState extends State<MealBreakfast> {
-// Text fields' controllers
+  // Text fields' controllers
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _ingredController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -26,7 +26,7 @@ class _MealBreakfastState extends State<MealBreakfast> {
 
   // ADD BREAKFAST FUNCTION
   Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
-
+    var _text = '';
     await showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -40,14 +40,15 @@ class _MealBreakfastState extends State<MealBreakfast> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children:[
                 TextField(
                   controller: _topicController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       // icon: Icon(Icons.man),
-                      labelText: 'Topic'
+                      labelText: 'Topic',
                   ),
                 ),
+
                 TextField(
                   controller: _ingredController,
                   decoration: const InputDecoration(
@@ -109,7 +110,7 @@ class _MealBreakfastState extends State<MealBreakfast> {
                     final String description = _descriptionController.text;
                     final String date = _dateController.text;
 
-                    if (topic != null) {
+                    if (_topicController.value.text.isNotEmpty && _dateController.value.text.isNotEmpty) {
                       await _mealBreakfast.add({"topic": topic, "ingredients": ingredients, "description": description, "date": date}).then((value) {
                         Get.snackbar('Success', 'Successfully Saved');
                       });
@@ -118,9 +119,14 @@ class _MealBreakfastState extends State<MealBreakfast> {
                       _descriptionController.text = '';
                       _dateController.text = '';
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('Successfully Submitted')
-                      ));
+                    }
+                    else{
+                      if(_topicController.value.text.isEmpty){
+                        Get.snackbar('Failed', 'Topic Cannot Be Empty');
+                    }
+                      else if(_dateController.value.text.isEmpty){
+                        Get.snackbar('Failed', 'Date Cannot Be Empty');
+                      }
                     }
                   },
                 )

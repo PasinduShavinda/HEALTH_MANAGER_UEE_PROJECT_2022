@@ -60,7 +60,7 @@ class HomeScreenHR extends StatelessWidget {
               SizedBox(height: kDefaultPadding),
 
               Text(
-                'Popular',
+                'Recipes',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -76,11 +76,11 @@ class HomeScreenHR extends StatelessWidget {
                  crossAxisSpacing: 10,
                  physics: NeverScrollableScrollPhysics(),
                  shrinkWrap: true,
-                 mainAxisSpacing: 1,
+                 mainAxisSpacing: 8,
                  itemBuilder: (context, index) {
                    return ItemCard(item: demoItems[index], index: index);
                  },
-                 staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+                 staggeredTileBuilder: (index) => StaggeredTile.fit(2),
                ),
             ],
           ),
