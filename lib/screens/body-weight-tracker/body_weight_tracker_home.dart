@@ -1,3 +1,5 @@
+// Parana eka
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../healthy-recipe/components/bottom_nav.dart';
+import 'body_weight_chart.dart';
 
 class BWTHOME extends StatefulWidget {
   const BWTHOME({super.key});
@@ -52,14 +55,14 @@ class _BWTHOMEState extends State<BWTHOME> {
                   controller: _dateController,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.calendar_today),
-                      labelText: 'Date',
+                    labelText: 'Date',
                   ),
                   readOnly: true,
                   onTap: () async{
                     DateTime? pickedDate = await showDatePicker(
-                      context: context, initialDate: DateTime.now(),
-                      firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2101)
+                        context: context, initialDate: DateTime.now(),
+                        firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101)
                     );
                     if(pickedDate != null ){
                       print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
@@ -91,7 +94,7 @@ class _BWTHOMEState extends State<BWTHOME> {
                     ),
                   ),
                   onPressed: () async {
-                    final String weight = _weightController.text;
+                    final double? weight = double.tryParse(_weightController.text);
                     final String dates = _dateController.text;
                     if (_weightController.value.text.isNotEmpty && _dateController.value.text.isNotEmpty) {
                       await _weight.add({"weight": weight, "date": dates}).then((value) {
@@ -145,7 +148,7 @@ class _BWTHOMEState extends State<BWTHOME> {
                       icon: Icon(Icons.man),
                       labelText: 'Weight'),
                   keyboardType: TextInputType.number,
-                  
+
                 ),
                 TextField(
                   controller: _dateController,
@@ -178,8 +181,8 @@ class _BWTHOMEState extends State<BWTHOME> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 150),
-                    backgroundColor: Colors.orange
+                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 150),
+                      backgroundColor: Colors.orange
                   ),
                   child: const Text( 'Update',
                     style: TextStyle(
@@ -189,7 +192,7 @@ class _BWTHOMEState extends State<BWTHOME> {
                     ),
                   ),
                   onPressed: () async {
-                    final String weight = _weightController.text;
+                    final double? weight = double.tryParse(_weightController.text);
                     final String dates = _dateController.text;
                     if (weight != null) {
                       await _weight
@@ -264,12 +267,12 @@ class _BWTHOMEState extends State<BWTHOME> {
                     ),
                     child: ListTile(
                       title: Text(
-                        documentSnapshot['weight'] + ' kg',
+                        documentSnapshot['weight'].toString() + ' kg',
                         style: TextStyle(
-                        fontSize: 27,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
+                          fontSize: 27,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       subtitle: Text(
                         documentSnapshot['date'],
@@ -305,34 +308,34 @@ class _BWTHOMEState extends State<BWTHOME> {
                               ),
                               onPressed: () {
                                 // Delete Confirmation Message
-                                  // set up the buttons
-                                  Widget cancelButton = TextButton(
-                                    child: Text("Cancel"),
-                                    onPressed:  () {
-                                      Navigator.pop(context);
-                                    },
-                                  );
-                                  Widget continueButton = TextButton(
-                                    child: Text("Ok"),
-                                    onPressed: () => _delete(documentSnapshot.id),
-                                  );
+                                // set up the buttons
+                                Widget cancelButton = TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed:  () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                                Widget continueButton = TextButton(
+                                  child: Text("Ok"),
+                                  onPressed: () => _delete(documentSnapshot.id),
+                                );
 
-                                  // set up the AlertDialog
-                                  AlertDialog alert = AlertDialog(
-                                    title: Text("Health Manager"),
-                                    content: Text("Are you sure want to delete?"),
-                                    actions: [
-                                      cancelButton,
-                                      continueButton,
-                                    ],
-                                  );
-                                  // show the dialog
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return alert;
-                                    },
-                                  );
+                                // set up the AlertDialog
+                                AlertDialog alert = AlertDialog(
+                                  title: Text("Health Manager"),
+                                  content: Text("Are you sure want to delete?"),
+                                  actions: [
+                                    cancelButton,
+                                    continueButton,
+                                  ],
+                                );
+                                // show the dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alert;
+                                  },
+                                );
                               },
                             ),
                           ],
@@ -348,16 +351,30 @@ class _BWTHOMEState extends State<BWTHOME> {
             );
           },
         ),
-        // Add new product
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _create(),
-          child: const Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
+        // Add Button
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              FloatingActionButton(
+                onPressed: () => _create(),
+                child: Icon(Icons.add),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  _navigateToAnalytics(context);
+                },
+                child: Icon(Icons.bar_chart),
+              )
+            ],
+          ),
+        )
     );
   }
 
-  void _navigateToBodyWeightTrackerHome(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BWTHOME()));
+  void _navigateToAnalytics(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeightChart()));
   }
 }
