@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:d_chart/d_chart.dart';
+import 'package:flutter_svg/svg.dart';
+import '../healthy-recipe/components/bottom_nav.dart';
 
 class WeightChart extends StatefulWidget {
    WeightChart({Key? key}) : super(key: key);
@@ -14,9 +16,34 @@ class _WeightChartState extends State<WeightChart> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(title: const Text(('Live Chart')),
+      appBar:
+      AppBar(
+        leading: IconButton(
+            icon: SvgPicture.asset('assets/icons/back.svg'),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
+        elevation:4,
+        centerTitle:false,
+        automaticallyImplyLeading: false,
+        backgroundColor:Color(0xffc396e5),
+        shape:RoundedRectangleBorder(
+          borderRadius:BorderRadius.zero,
+        ),
+        title:Text(
+          "Health Manager",
+          style:TextStyle(
+            fontWeight:FontWeight.w800,
+            fontStyle:FontStyle.normal,
+            fontSize:17,
+            color:Color(0xffffffff),
+          ),
+        ),
       ),
-      body: ListView(
+      bottomNavigationBar: BottomNavBar(),
+      body:
+      ListView(
         padding: const EdgeInsets.all(16),
         children: [
           StreamBuilder(

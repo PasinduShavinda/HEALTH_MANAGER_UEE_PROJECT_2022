@@ -18,7 +18,8 @@ class BWTHOME extends StatefulWidget {
 }
 
 class _BWTHOMEState extends State<BWTHOME> {
-
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBar = const Text('My Body Weight Tracker');
   // Text fields' controllers
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -124,7 +125,7 @@ class _BWTHOMEState extends State<BWTHOME> {
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
 
-      _weightController.text = documentSnapshot['weight'];
+      _weightController.text = documentSnapshot['weight'].toString();
       _dateController.text = documentSnapshot['date'];
     }
 
@@ -239,15 +240,43 @@ class _BWTHOMEState extends State<BWTHOME> {
           shape:RoundedRectangleBorder(
             borderRadius:BorderRadius.zero,
           ),
-          title:Text(
-            "Health Manager",
-            style:TextStyle(
-              fontWeight:FontWeight.w800,
-              fontStyle:FontStyle.normal,
-              fontSize:17,
-              color:Color(0xffffffff),
+          title:customSearchBar,
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  if (customIcon.icon == Icons.search) {
+                    customIcon = const Icon(Icons.cancel);
+                    customSearchBar = const ListTile(
+                      leading: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      title: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'search',
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          //border: InputBorder.none,
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }else {
+                    customIcon = const Icon(Icons.search);
+                    customSearchBar = const Text('Health Manager');
+                  }
+                });
+              },
+              icon: customIcon,
             ),
-          ),
+          ],
         ),
         bottomNavigationBar: BottomNavBar(),
         body: StreamBuilder(
