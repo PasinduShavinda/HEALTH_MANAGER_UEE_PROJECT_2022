@@ -24,7 +24,7 @@ class _HomePageState extends State<TreatementHistory> {
   final TextEditingController _DateController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   String imgUrl="";
-
+ String id="";
   final CollectionReference _DoctorTreatements =
   FirebaseFirestore.instance.collection('DoctorTreatements');
 
@@ -36,6 +36,7 @@ class _HomePageState extends State<TreatementHistory> {
       _noteController.text = documentSnapshot['note'];
       _DateController.text = documentSnapshot['date'].toString();
        imgUrl=documentSnapshot['image'].toString();
+       id=documentSnapshot.id;
     }
 
     await showModalBottomSheet(
@@ -60,22 +61,31 @@ class _HomePageState extends State<TreatementHistory> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Doctor Name                    "+ ":  " +_doctor_nameController.text),
+                Text("Doctor Name  "+ ":" +_doctor_nameController.text,
+                 style: TextStyle(
+                   fontSize: 18
+                 ),),
 
                 const SizedBox(
                   height: 20,
                 ),
-                Text("Date                                "+ ":  " +_DateController.text),
+                Text("Date         "+ ":" +_DateController.text,
+                  style: TextStyle(
+                      fontSize: 18
+                  ),),
 
                 const SizedBox(
                   height: 20,
                 ),
-                Text("Treatement Discription  "+ ":  " +_noteController.text),
+                Text("Treatement Discription  "+ ":  " +_noteController.text,
+                  style: TextStyle(
+                      fontSize: 18
+                  ),),
 
                 const SizedBox(
                   height: 20,
                 ),
-            Padding(
+               Padding(
               padding : EdgeInsets.symmetric(horizontal: 50),
               child :DottedBorder(
               borderType: BorderType.RRect,
@@ -89,8 +99,7 @@ class _HomePageState extends State<TreatementHistory> {
                 child: Image.network(imgUrl,
                     fit: BoxFit.cover) )
             ),
-            )
-
+            ),
 
 
               ],
@@ -99,12 +108,12 @@ class _HomePageState extends State<TreatementHistory> {
         });
   }
 
-  // Future<void> _delete(String productId) async {
-  //   await _DoctorTreatements.doc(productId).delete();
-  //
-  //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-  //       content: Text('You have successfully deleted a product')));
-  // }
+  Future<void> _delete(String productId) async {
+    await _DoctorTreatements.doc(productId).delete();
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('You have successfully deleted a treatement recorde')));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,11 +178,63 @@ class _HomePageState extends State<TreatementHistory> {
                           children: [
 
                             IconButton(
-                                 padding: EdgeInsets.symmetric(horizontal: 35 ),
+                                 padding: EdgeInsets.symmetric(horizontal: 10 ),
                                 icon: const Icon(Icons.arrow_drop_down_circle_outlined,
+                                color: Colors.black,
                                 size: 40,),
                                 onPressed: () =>
                                     _view(documentSnapshot)),
+
+                              // IconButton(
+                              //     padding: EdgeInsets.symmetric(horizontal: 5 ),
+                              //     icon: const Icon(Icons.delete_forever,
+                              //       size: 40,),
+                              //     onPressed: () =>
+                              //         _delete(documentSnapshot.id)),
+                            IconButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Color(0xEFEFEFFF),
+                                shape: CircleBorder(),
+                              ),
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                              onPressed: () {
+                                // Delete Confirmation Message
+                                // set up the buttons
+                                Widget cancelButton = TextButton(
+                                  child: Text("Cancel"),
+                                  onPressed:  () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                                Widget continueButton = TextButton(
+                                  child: Text("Ok"),
+                                  onPressed: () =>  _delete(documentSnapshot.id).then((value) =>  Navigator.pop(context)),
+
+                                );
+
+                                // set up the AlertDialog
+                                AlertDialog alert = AlertDialog(
+                                  title: Text("Health Manager"),
+                                  content: Text("Are you sure want to delete?"),
+                                  actions: [
+                                    cancelButton,
+                                    continueButton,
+                                  ],
+                                );
+                                // show the dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return alert;
+                                  },
+                                );
+                              },
+                            )
+
+
                           ],
                         ),
                       ),

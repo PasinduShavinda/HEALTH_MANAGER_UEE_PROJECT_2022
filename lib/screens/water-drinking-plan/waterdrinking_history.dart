@@ -8,31 +8,32 @@ import 'package:intl/intl.dart';
 
 
 
-class SymptomsHistory extends StatefulWidget {
-  const SymptomsHistory({Key? key}) : super(key: key);
+class WaterDrinkingHistory extends StatefulWidget {
+  const WaterDrinkingHistory({Key? key}) : super(key: key);
 
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _WaterHistoryPageState createState() => _WaterHistoryPageState();
 }
 
-class _HomePageState extends State<SymptomsHistory> {
+class _WaterHistoryPageState extends State<WaterDrinkingHistory> {
 
   double ui=0;
 // text fields' controllers
-  final TextEditingController _symptomsController = TextEditingController();
-  final TextEditingController _symptomsDateController = TextEditingController();
+  final TextEditingController _waterGoalController = TextEditingController();
+  final TextEditingController _drinkinglevelDateController = TextEditingController();
 
 
-  final CollectionReference _symptoms =
-  FirebaseFirestore.instance.collection('symptoms');
+
+  final CollectionReference _waterintake =
+  FirebaseFirestore.instance.collection('DailyWaterIntake');
 
 
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
 
-      _symptomsController.text = documentSnapshot['symptom'];
-      _symptomsDateController.text  =  documentSnapshot['timestamp'].toString();
+      _waterGoalController.text = documentSnapshot['Goal'].toString();
+      _drinkinglevelDateController.text  =  documentSnapshot['waterintake'].toString();
 
 
     }
@@ -53,42 +54,31 @@ class _HomePageState extends State<SymptomsHistory> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               // Text(_symptomsDateController.text.toString()),
+                // Text(_symptomsDateController.text.toString()),
                 Text("Edit Recode",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),),
                 const SizedBox(
                   height: 40,
                 ),
 
                 TextField(
-                  controller: _symptomsController,
-                  decoration: const InputDecoration(labelText: 'symptom'),
+                  controller:_waterGoalController ,
+                  decoration: const InputDecoration(labelText: 'WaterGoal'),
                 ),
 
 
                 const SizedBox(
                   height: 20,
                 ),
-                RatingBar.builder(
+              TextField(
+              controller:_drinkinglevelDateController ,
+              decoration: const InputDecoration(labelText: 'waterintake'),
 
-                  initialRating: (0),
-                  unratedColor: Color(0xffece5e5),
-                  itemBuilder: (context, index) =>
-                      Icon(Icons.star, color: Color(0xffffc107)),
-                  itemCount: 5,
-                  itemSize: 40,
-                  direction: Axis.horizontal,
-                  allowHalfRating: false,
-
-                  onRatingUpdate: (value) {
-
-                    ui=value;
-                  },
-                ),
+          ),
                 const SizedBox(
                   height: 50,
                 ),
@@ -97,18 +87,18 @@ class _HomePageState extends State<SymptomsHistory> {
                     child: const Text( 'Update'),
 
                     onPressed: () async {
-                      final String symptom = _symptomsController.text;
-                      final String date =_symptomsDateController.text;
-                      final double? symptomlevel =ui;
-                      if (symptomlevel != null) {
+                      final double? Goal = double.tryParse(_waterGoalController.text);
+                      final double? waterintake =double.tryParse(_drinkinglevelDateController.text);
 
-                        await _symptoms
+
+
+                        await _waterintake
                             .doc(documentSnapshot!.id)
-                            .update({"symptom": symptom, "symptomlevel": symptomlevel,"timestamp":date});
-                        _symptomsController.text = '';
-                        _symptomsDateController.text = '';
+                            .update({"Goal": Goal, "waterintake": waterintake});
+                      _waterGoalController.text = '';
+                      _waterGoalController.text = '';
                         Navigator.of(context).pop();
-                      }
+
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xffc396e5),
@@ -122,10 +112,10 @@ class _HomePageState extends State<SymptomsHistory> {
   }
 
   Future<void> _delete(String productId) async {
-    await _symptoms.doc(productId).delete();
+    await _waterintake.doc(productId).delete();
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('You have successfully deleted a product')));
+        content: Text('You have successfully deleted a row')));
   }
 
   @override
@@ -139,7 +129,7 @@ class _HomePageState extends State<SymptomsHistory> {
         body:
         StreamBuilder(
 
-          stream: _symptoms.snapshots(),
+          stream: _waterintake.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
               return ListView.builder(
@@ -161,38 +151,39 @@ class _HomePageState extends State<SymptomsHistory> {
                     child: ListTile(
                       title: Column(
 
-                              children:[
+                          children:[
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              child:   Text(DateFormat('yyyy-MM-dd').format((documentSnapshot['timestamp']).toDate()).toString()),
 
-                                Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
-                                      child:Text(documentSnapshot['symptom'],
-                                       textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                           fontSize: 18
-                                        ),
-                                     )
-                                ),
+                            ),
 
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child:   Text(DateFormat('yyyy-MM-dd').format((documentSnapshot['timestamp']).toDate()).toString()),
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
+                                child:Text("Water Goal   :" + documentSnapshot['Goal'].toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18
+                                  ),
+                                )
+                            ),
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
+                                child:Text("Water Intake   :" + documentSnapshot['waterintake'].toString(),
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18
+                                  ),
+                                )
+                            ),
 
-                    )
-                      ]),
 
-                      subtitle:  RatingBarIndicator(
+                          ]),
 
-                        rating: (documentSnapshot['symptomlevel']),
-                        unratedColor: Color(0xffece5e5),
-                        itemBuilder: (context, index) =>
-                            Icon(Icons.star, color: Color(0xffffc107)),
-                        itemCount: 5,
-                        itemSize: 30,
-                        direction: Axis.horizontal,
 
-                      ),
-                      isThreeLine:true,
+
 
                       trailing: SizedBox(
                         width: 100,
@@ -200,22 +191,19 @@ class _HomePageState extends State<SymptomsHistory> {
                           children: [
                             IconButton(
                                 icon: const Icon(Icons.edit,
-                                    color: Colors.amber,
-                                    size: 30,),
+                                  color: Colors.amber,
+                                  size: 30,),
                                 onPressed: () =>
                                     _update(documentSnapshot)),
-                            // IconButton(
-                            //     icon: const Icon(Icons.delete),
-                            //     onPressed: () =>
-                            //         _delete(documentSnapshot.id)),
+
                             IconButton(
                               style: TextButton.styleFrom(
                                 backgroundColor: Color(0xEFEFEFFF),
                                 shape: CircleBorder(),
                               ),
                               icon: Icon(
-                                Icons.delete,
-                                color: Colors.red,
+                                  Icons.delete,
+                                  color: Colors.red,
                                   size: 30
                               ),
                               onPressed: () {
@@ -230,7 +218,7 @@ class _HomePageState extends State<SymptomsHistory> {
                                 Widget continueButton = TextButton(
                                   child: Text("Ok"),
                                   onPressed: () =>  _delete(documentSnapshot.id).then((value) =>  Navigator.pop(context)),
-                                  
+
                                 );
 
                                 // set up the AlertDialog
@@ -251,6 +239,7 @@ class _HomePageState extends State<SymptomsHistory> {
                                 );
                               },
                             ),
+
                           ],
                         ),
                       ),
