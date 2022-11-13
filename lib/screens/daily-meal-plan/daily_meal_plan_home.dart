@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/daily-meal-plan/daily_meal_plan_lunch.dart';
@@ -260,6 +262,46 @@ class _DMPHOMEState extends State<DMPHOME> {
   }
   void _navigateToDinner(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => MealDinner()));
+  }
+}
+
+//Meal Plan Splash Screen
+class MealSplash extends StatefulWidget {
+  const MealSplash({Key? key}) : super(key: key);
+
+  @override
+  State<MealSplash> createState() => _MealSplashState();
+}
+
+class _MealSplashState extends State<MealSplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DMPHOME()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
+    );
   }
 }
 

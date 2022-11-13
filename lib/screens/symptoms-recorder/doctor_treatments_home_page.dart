@@ -62,6 +62,10 @@ class _MedicalNoteState extends State<MedicalNote>{
       ),
       bottomNavigationBar: BottomNavBar(),
       body: Container(
+      height: double.infinity,
+      width: double.infinity,
+      child :SingleChildScrollView(
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
 
 
         child: Column(
@@ -124,7 +128,7 @@ class _MedicalNoteState extends State<MedicalNote>{
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 20 ,vertical: 20),
+          Padding(padding: EdgeInsets.symmetric(horizontal: 20 ,vertical: 15),
             child: Text("Write a Note",
               textAlign: TextAlign.start,
               overflow: TextOverflow.clip,
@@ -171,7 +175,7 @@ class _MedicalNoteState extends State<MedicalNote>{
                 hintStyle: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
-                  fontSize: 14,
+                  fontSize: 18,
                   color: Color(0xffb4b0b7),
                 ),
                 filled: true,
@@ -212,11 +216,11 @@ class _MedicalNoteState extends State<MedicalNote>{
                     borderRadius: BorderRadius.circular(4.0),
                     borderSide: BorderSide(color: Color(0xffc396e5), width: 1),
                   ),
-                  hintText: "Doctor Name",
+                  hintText: "Date of Treatement",
                   hintStyle: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
-                    fontSize: 14,
+                    fontSize: 18,
                     color: Color(0xffb4b0b7),
                   ),
                   filled: true,
@@ -271,18 +275,12 @@ class _MedicalNoteState extends State<MedicalNote>{
             height: 10,
           ),
           Padding(padding: EdgeInsets.symmetric(horizontal: 30),
-            // child: TextField(
-            //   controller: noteController,
-            //   decoration: InputDecoration(
-            //       border: OutlineInputBorder(),
-            //       hintText: 'Note'
-            //   ),
-            // ),
+
             child :TextField(
               controller: noteController,
               obscureText: false,
               textAlign: TextAlign.start,
-              maxLines: 1,
+              maxLines: 3,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.normal,
@@ -306,7 +304,7 @@ class _MedicalNoteState extends State<MedicalNote>{
                 hintStyle: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
-                  fontSize: 14,
+                  fontSize: 18,
                   color: Color(0xffb4b0b7),
                 ),
                 filled: true,
@@ -329,8 +327,8 @@ class _MedicalNoteState extends State<MedicalNote>{
                   radius: Radius.circular(12),
                   padding: EdgeInsets.all(6),
                   child: Container(
-                      height: 300,
-                      width: 200,
+                      height: 230,
+                      width: 150,
                       color: Color(0xffefe4ef),
                       child: myImage==null
                           ? const Center(
@@ -368,6 +366,7 @@ class _MedicalNoteState extends State<MedicalNote>{
           )
         ],),
       ),
+    )
     );
   }
 
@@ -421,6 +420,7 @@ class _MedicalNoteState extends State<MedicalNote>{
             size: 30,
           ),
         ),
+
       ),
     );
   }
