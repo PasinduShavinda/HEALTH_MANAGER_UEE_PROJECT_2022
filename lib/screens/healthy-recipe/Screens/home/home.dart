@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +10,7 @@ import 'components/categories.dart';
 import 'components/filter.dart';
 import 'components/item_card.dart';
 import 'components/search_bar.dart';
+import 'dart:io';
 
 class HomeScreenHR extends StatelessWidget {
   @override
@@ -89,3 +91,44 @@ class HomeScreenHR extends StatelessWidget {
     );
   }
 }
+
+//Healthy Recipe Splash Screen
+class HealthyRecipeSplash extends StatefulWidget {
+  const HealthyRecipeSplash({Key? key}) : super(key: key);
+
+  @override
+  State<HealthyRecipeSplash> createState() => _HealthyRecipeSplashState();
+}
+
+class _HealthyRecipeSplashState extends State<HealthyRecipeSplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreenHR()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
+    );
+  }
+}
+

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/body-weight-tracker/body_weight_tracker_home.dart';
-import 'package:health_manager_uee_project_2022/screens/daily-meal-plan/daily_meal_plan_home.dart';
 import 'package:health_manager_uee_project_2022/screens/diet-plan/diet_plan_home.dart';
 import 'package:health_manager_uee_project_2022/screens/health-hotline/health_hotline_home.dart';
 import 'package:health_manager_uee_project_2022/screens/healthy-recipe/healthy_recipe_home.dart';
@@ -10,6 +9,7 @@ import 'package:health_manager_uee_project_2022/screens/symptoms-recorder/syptom
 import 'package:health_manager_uee_project_2022/screens/water-drinking-plan/water_drink_home.dart';
 import 'package:health_manager_uee_project_2022/screens/work-out-plan/work_out_home.dart';
 import 'bmi-calculator/bmi_home.dart';
+import 'daily-meal-plan/daily_meal_plan_home.dart';
 import 'healthy-recipe/Screens/home/home.dart';
 import 'healthy-recipe/components/bottom_nav.dart';
 
@@ -735,27 +735,27 @@ class HomeScreen extends StatelessWidget {
   }
   void _navigateToDietPlanHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => DietPlanHOME()));
+        .push(MaterialPageRoute(builder: (context) => DietSplash()));
   }
 
   void _navigateToDailyMealPlanHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => DMPHOME()));
+        .push(MaterialPageRoute(builder: (context) => MealSplash()));
   }
 
   void _navigateToBodyWeightTrackerHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => BWTHOME()));
+        .push(MaterialPageRoute(builder: (context) => BWTSplash()));
   }
 
   void _navigateToBMIHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => BMIHOME()));
+        .push(MaterialPageRoute(builder: (context) => BMISplash()));
   }
 
   void _navigateToHealthRecipeHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => HomeScreenHR()));
+        .push(MaterialPageRoute(builder: (context) => HealthyRecipeSplash()));
   }
 
   void _navigateSleepPlanHome(BuildContext context) {
