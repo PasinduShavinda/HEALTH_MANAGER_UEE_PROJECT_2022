@@ -8,12 +8,9 @@ import '../../components/bottom_nav.dart';
 import '../../constants.dart';
 
 import 'components/item_card.dart';
-<<<<<<< HEAD
 
-=======
 import 'components/search_bar.dart';
 import 'dart:io';
->>>>>>> afde69bd69d6bf565caf7930e37e001584a4df4c
 
 class HomeScreenHR extends StatelessWidget {
   @override
