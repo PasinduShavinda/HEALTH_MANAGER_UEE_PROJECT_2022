@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
-
+import 'dart:io';
 
 class HealthHotHOME extends StatefulWidget {
   const HealthHotHOME({super.key});
@@ -408,5 +409,44 @@ class _HealthHotHOMEState extends State<HealthHotHOME> {
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
+  }
+}
+//Health Hotline Splash Screen
+class HotlineSplash extends StatefulWidget {
+  const HotlineSplash({Key? key}) : super(key: key);
+
+  @override
+  State<HotlineSplash> createState() => _HotlineSplashState();
+}
+
+class _HotlineSplashState extends State<HotlineSplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HealthHotHOME()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
+    );
   }
 }

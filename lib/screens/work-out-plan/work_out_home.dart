@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
+import 'dart:io';
 
 class WorkOutHOME extends StatefulWidget {
   const WorkOutHOME({super.key});
@@ -55,6 +57,47 @@ class _WorkOutHOMEState extends State<WorkOutHOME> {
             ),
           ),
         )
+    );
+  }
+}
+
+
+//Work Out Splash Screen
+class WorkOutSplash extends StatefulWidget {
+  const WorkOutSplash({Key? key}) : super(key: key);
+
+  @override
+  State<WorkOutSplash> createState() => _WorkOutSplashState();
+}
+
+class _WorkOutSplashState extends State<WorkOutSplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WorkOutHOME()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
     );
   }
 }

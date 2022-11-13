@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'water_plan.dart';
+import 'dart:io';
 
 class WaterDrinkHOME extends StatefulWidget{
   const WaterDrinkHOME ({Key? key}):super(key: key);
@@ -407,5 +408,46 @@ class _WaterLevelState extends State<WaterDrinkHOME>{
   Future<void> addwaterlevel(_waterlevel) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setDouble('_waterlevel', _waterlevel);
+  }
+}
+
+
+//Water Drink Splash Screen
+class WaterSplash extends StatefulWidget {
+  const WaterSplash({Key? key}) : super(key: key);
+
+  @override
+  State<WaterSplash> createState() => _WaterSplashState();
+}
+
+class _WaterSplashState extends State<WaterSplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WaterDrinkHOME()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
+    );
   }
 }

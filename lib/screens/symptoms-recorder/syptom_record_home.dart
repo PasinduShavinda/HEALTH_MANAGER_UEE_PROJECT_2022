@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/symptoms-recorder/other_symptoms.dart';
@@ -8,16 +9,13 @@ import 'headsymptoms.dart';
 import 'mentalsymptoms.dart';
 import 'skinsymptoms.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
-
-
+import 'dart:io';
 
 class SyptRecordHOME extends StatefulWidget {
   const SyptRecordHOME({super.key});
 
   @override
   State<SyptRecordHOME> createState() => _SyptRecordHOMEState();
-
-
 }
 
 class _SyptRecordHOMEState extends State<SyptRecordHOME> {
@@ -533,5 +531,45 @@ class DoctorTreatments extends StatelessWidget {
     );
   }
 }
+//Syptom Splash Screen
+class SyptomSplash extends StatefulWidget {
+  const SyptomSplash({Key? key}) : super(key: key);
+
+  @override
+  State<SyptomSplash> createState() => _SyptomSplashState();
+}
+
+class _SyptomSplashState extends State<SyptomSplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SyptRecordHOME()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 

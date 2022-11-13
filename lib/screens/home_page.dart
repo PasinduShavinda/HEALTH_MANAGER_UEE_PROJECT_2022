@@ -765,22 +765,22 @@ class HomeScreen extends StatelessWidget {
 
   void _navigateToWaterDrinkingPlanHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => WaterDrinkHOME()));
+        .push(MaterialPageRoute(builder: (context) => WaterSplash()));
   }
 
   void _navigateToWorkOutPlanHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => WorkOutHOME()));
+        .push(MaterialPageRoute(builder: (context) => WorkOutSplash()));
   }
 
   void _navigateToSymptomRecordHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => SyptRecordHOME()));
+        .push(MaterialPageRoute(builder: (context) => SyptomSplash()));
   }
 
   void _navigateToHealthHotlineHome(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => HealthHotHOME()));
+        .push(MaterialPageRoute(builder: (context) => HotlineSplash()));
   }
 }
 
