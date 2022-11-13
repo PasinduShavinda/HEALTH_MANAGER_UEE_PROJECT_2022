@@ -67,7 +67,7 @@ class _SyptRecordHOMEState extends State<SyptRecordHOME> {
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontStyle: FontStyle.normal,
-                      fontSize: 26,
+                      fontSize: 24,
                       color: Colors.black,
                     ),
                   ),
@@ -463,7 +463,7 @@ class DoctorTreatments extends StatelessWidget {
                },
             child:  SizedBox(
              width: 300,
-             height: 180,
+             height: 160,
               child: Container(
 
                 child: Row(

@@ -1,13 +1,32 @@
 ///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
 import 'syptom_history.dart';
 
-class MentalSymptomsPage extends StatelessWidget {
+class MentalSymptomsPage extends StatefulWidget {
+
+
+  const MentalSymptomsPage ({Key? key}):super(key: key);
+
+  @override
+  _MentalSymptomsState createState()=>_MentalSymptomsState();
+
+
+}
+class _MentalSymptomsState extends State<MentalSymptomsPage>{
+
+
+
+
+
+
   final CollectionReference _symptoms =
   FirebaseFirestore.instance.collection('symptoms');
 
@@ -17,10 +36,82 @@ class MentalSymptomsPage extends StatelessWidget {
 
   double symptomlevel=0;
   String symptom="";
+
+  String textResult='';
+  String imageresult="";
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffffffff),
+    return   Container(
+        decoration: BoxDecoration(
+        gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        stops: const [0.6,0.7,0.8,0.88,0.95,0.98],
+        colors: (symptomlevel == 1)?
+    [
+      Colors.white,
+      Colors.lightGreen.shade50,
+      Colors.lightGreen.shade100,
+      Colors.lightGreen.shade200,
+      Colors.lightGreen.shade300,
+      Colors.lightGreenAccent.shade400,
+
+    ]:
+    (symptomlevel == 2)?
+    [
+      Colors.white,
+      Colors.yellow.shade50,
+      Colors.yellow.shade100,
+      Colors.yellow.shade200,
+      Colors.yellow.shade300,
+      Colors.yellow.shade400,
+
+    ]:
+    (symptomlevel == 3)?
+    [
+      Colors.white,
+      Colors.amber.shade50,
+      Colors.amber.shade100,
+      Colors.amber.shade200,
+      Colors.amber.shade300,
+      Colors.amber.shade500,
+
+    ]:
+    (symptomlevel == 4)?
+    [
+      Colors.white,
+      Colors.orange.shade50,
+      Colors.orange.shade100,
+      Colors.orange.shade200,
+      Colors.orange.shade300,
+      Colors.orange.shade800,
+
+    ]:
+    (symptomlevel == 5)?
+    [
+      Colors.white,
+      Colors.red.shade50,
+      Colors.red.shade100,
+      Colors.red.shade200,
+      Colors.red.shade300,
+      Colors.red.shade400,
+
+    ]:
+    [
+      Colors.white,
+      Colors.grey.shade50,
+      Colors.grey.shade100,
+      Colors.grey.shade200,
+      Colors.grey.shade300,
+      Colors.grey.shade400,
+
+
+    ]
+    )
+    ),
+      child:   Scaffold(
+        backgroundColor: Colors.transparent,
       appBar:
       AppBar(
         leading: IconButton(
@@ -119,7 +210,7 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(90, 20, 20, 40),
+                  padding: EdgeInsets.fromLTRB(90, 10, 20, 25),
                   child: Text(
                     "Mental Symptoms",
                     textAlign: TextAlign.start,
@@ -133,7 +224,7 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,7 +270,7 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -223,7 +314,7 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -268,7 +359,7 @@ class MentalSymptomsPage extends StatelessWidget {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -312,7 +403,7 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -356,7 +447,7 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -401,7 +492,7 @@ class MentalSymptomsPage extends StatelessWidget {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -442,7 +533,7 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -483,18 +574,96 @@ class MentalSymptomsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20,),
+                  child: Visibility(
+                    visible: textResult.isNotEmpty,
+                    child: DottedBorder(
+                      dashPattern: [6, 3, 2, 3],
+                      color:( (symptomlevel==1)? Colors.lightGreenAccent:
+                      (symptomlevel==2)?Colors.yellow:
+                      (symptomlevel==3) ?Colors.amber:
+                      (symptomlevel==4)?Colors.orange:
+                      (symptomlevel==5) ?Colors.red :
+                      Colors.black),
+                      borderType: BorderType.RRect,
+                      radius: Radius.circular(12),
+
+                      child:Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                          child: Row(
+                              children: [
+                                Visibility(
+                                  visible: textResult.isNotEmpty,
+                                  child: Text(
+                                    textResult,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blueGrey.shade800,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Visibility(
+                                    visible: imageresult.isNotEmpty,
+                                    child:Image(
+                                      image: AssetImage(imageresult),
+                                      height: 40.0,
+                                      width: 40.0,
+                                    ))
+                              ]
+                          )),
+
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsets.fromLTRB(80, 20, 88, 0),
                   child: MaterialButton(
                     onPressed: () async {
-                      if (symptomlevel != null) {
+                      if (symptomlevel >0) {
                         await _symptoms.add({
                           "symptom": symptom,
                           "symptomlevel": symptomlevel,
                           'timestamp' : Timestamp.now()
+                        }).then((value){
+                          Get.snackbar("Success", 'Data stored successfully', backgroundColor: Color.fromARGB(100, 22, 44, 33));
                         });
 
-                        Navigator.of(context).pop();
+
                       }
+                      setState(() {
+                        if(symptomlevel==0){
+                          textResult='Rate your pain before submitting';
+                          imageresult="";
+
+
+                        }else if(symptomlevel==1){
+                          textResult='You are in mild pain \n  Feel better soon!';
+                          imageresult="assets/images/pain1.png";
+
+
+                        }else if(symptomlevel==2){
+                          textResult=' You are in moderate pain \n Feel better soon!';
+                          imageresult="assets/images/pain2.png";
+
+                        }else if(symptomlevel==3){
+                          textResult=' you are severe pain \n Feel better soon!';
+                          imageresult="assets/images/pain3.png";
+
+                        }else if(symptomlevel==4){
+                          textResult='You are in very severe pain \n Feel better soon!';
+                          imageresult="assets/images/pain4.png";
+
+                        }else if(symptomlevel==5){
+                          textResult='You are in worst pain posible \n Feel better soon!';
+                          imageresult="assets/images/pain5.png";
+
+                        }
+                      });
+
+
 
                     },
                     color: Color(0xffc396e5),
@@ -522,6 +691,7 @@ class MentalSymptomsPage extends StatelessWidget {
           ),
         ],
       ),
+      )
     );
   }
 }
