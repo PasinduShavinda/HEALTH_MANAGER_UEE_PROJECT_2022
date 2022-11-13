@@ -368,7 +368,6 @@ class _HealthHotHOMEState extends State<HealthHotHOME> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
   }
 }
-<<<<<<< HEAD
 //Health Hotline Splash Screen
 class HotlineSplash extends StatefulWidget {
   const HotlineSplash({Key? key}) : super(key: key);
@@ -408,47 +407,3 @@ class _HotlineSplashState extends State<HotlineSplash> {
     );
   }
 }
-=======
-
-
-// Splash Screen
-//
-// class HomeSplash extends StatefulWidget {
-//   const HomeSplash({Key? key}) : super(key: key);
-//
-//   @override
-//   State<HomeSplash> createState() => _HomeSplashState();
-// }
-//
-// class _HomeSplashState extends State<HomeSplash> {
-//   void initState(){
-//     super.initState();
-//     Future.delayed(const Duration(seconds: 3), (){
-//       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-//     });
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.purpleAccent,
-//       body:Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Image.asset('assets/images/heart.png', height: 130,),
-//             const SizedBox(height: 30,),
-//             if(Platform.isIOS)
-//               const CupertinoActivityIndicator(
-//                 radius: 15,
-//               )
-//             else
-//               const CircularProgressIndicator(
-//                 color: Colors.white,
-//               )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
->>>>>>> ea2c86fe43d7f73b4c5e6b474b0bda6044e0f1e1
