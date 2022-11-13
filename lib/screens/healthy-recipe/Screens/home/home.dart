@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../Models/Item.dart';
-import '../../components/app_bar.dart';
+
 import '../../components/bottom_nav.dart';
 import '../../constants.dart';
-import 'components/categories.dart';
-import 'components/filter.dart';
+
 import 'components/item_card.dart';
+
 import 'components/search_bar.dart';
 import 'dart:io';
 

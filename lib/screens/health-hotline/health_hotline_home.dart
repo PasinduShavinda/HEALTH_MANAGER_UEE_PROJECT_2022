@@ -1,13 +1,19 @@
+
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:intl/intl.dart';
+
+import '../../main.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+
+import 'package:health_manager_uee_project_2022/screens/home_page.dart';
 class HealthHotHOME extends StatefulWidget {
   const HealthHotHOME({super.key});
 
@@ -111,53 +117,7 @@ class _HealthHotHOMEState extends State<HealthHotHOME> {
         });
 
 
-  //.........................................................................
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       appBar:
-  //       AppBar(
-  //         leading: IconButton(
-  //             icon: SvgPicture.asset('assets/icons/back.svg'),
-  //             onPressed: () {
-  //               Navigator.pop(context);
-  //             }
-  //         ),
-  //         elevation:4,
-  //         centerTitle:false,
-  //         automaticallyImplyLeading: false,
-  //         backgroundColor:Color(0xffc396e5),
-  //         shape:RoundedRectangleBorder(
-  //           borderRadius:BorderRadius.zero,
-  //         ),
-  //         title:Text(
-  //           "Health Manager",
-  //           style:TextStyle(
-  //             fontWeight:FontWeight.w800,
-  //             fontStyle:FontStyle.normal,
-  //             fontSize:17,
-  //             color:Color(0xffffffff),
-  //           ),
-  //         ),
-  //       ),
-  //       bottomNavigationBar: BottomNavBar(),
-  //       body: Center(
-  //         child: Padding(
-  //           padding: EdgeInsets.all(20),
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.start,
-  //             crossAxisAlignment: CrossAxisAlignment.center,
-  //             children: <Widget>[
-  //               Text(
-  //                 "Health Hotline Home",
-  //                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       )
-  //   );
-  // }
+
 }
 
 
@@ -261,17 +221,39 @@ class _HealthHotHOMEState extends State<HealthHotHOME> {
     });
     Navigator.pop(context);
 
-    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //     content: Text('You have successfully deleted a product')));
+
   }
 
 // view body wights
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Center(child: Text('Helth Hotline')), //app header
+        appBar:
+        AppBar(
+          leading: IconButton(
+              icon: SvgPicture.asset('assets/icons/back.svg'),
+              onPressed: () {
+                Navigator.pop(context);
+              }
+          ),
+          elevation:4,
+          centerTitle:false,
+          automaticallyImplyLeading: false,
+          backgroundColor:Color(0xffc396e5),
+          shape:RoundedRectangleBorder(
+            borderRadius:BorderRadius.zero,
+          ),
+          title:Text(
+            "Health Manager",
+            style:TextStyle(
+              fontWeight:FontWeight.w800,
+              fontStyle:FontStyle.normal,
+              fontSize:17,
+              color:Color(0xffffffff),
+            ),
+          ),
         ),
+
 
         bottomNavigationBar: BottomNavBar(),
         body: StreamBuilder(
@@ -362,32 +344,7 @@ class _HealthHotHOMEState extends State<HealthHotHOME> {
                                 );
                               },
                             ),
-        //.......................................................
-        // body: StreamBuilder(
-        //   stream: _hotline.snapshots(),
-        //   builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-        //     if (streamSnapshot.hasData) {
-        //       return ListView.builder(
-        //         itemCount: streamSnapshot.data!.docs.length,
-        //         itemBuilder: (context, index) {
-        //           final DocumentSnapshot documentSnapshot =
-        //           streamSnapshot.data!.docs[index];
-        //
-        //           return Card(
-        //             margin: const EdgeInsets.all(10),
-        //             child: ListTile(
-        //               title: Text(documentSnapshot['name']),
-        //               subtitle: Text(documentSnapshot['pnumber'].toString()),
-        //               trailing: SizedBox(
-        //                 width: 100,
-        //                 child: Row(
-        //                   children: [
-        //                     IconButton(
-        //                         icon: const Icon(Icons.edit),
-        //                         onPressed: () => _update(documentSnapshot)),
-        //                     IconButton(
-        //                         icon: const Icon(Icons.delete),
-        //                         onPressed: () => _delete(documentSnapshot.id)),
+
                           ],
                         ),
                       ),
@@ -411,6 +368,7 @@ class _HealthHotHOMEState extends State<HealthHotHOME> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
   }
 }
+<<<<<<< HEAD
 //Health Hotline Splash Screen
 class HotlineSplash extends StatefulWidget {
   const HotlineSplash({Key? key}) : super(key: key);
@@ -450,3 +408,47 @@ class _HotlineSplashState extends State<HotlineSplash> {
     );
   }
 }
+=======
+
+
+// Splash Screen
+//
+// class HomeSplash extends StatefulWidget {
+//   const HomeSplash({Key? key}) : super(key: key);
+//
+//   @override
+//   State<HomeSplash> createState() => _HomeSplashState();
+// }
+//
+// class _HomeSplashState extends State<HomeSplash> {
+//   void initState(){
+//     super.initState();
+//     Future.delayed(const Duration(seconds: 3), (){
+//       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+//     });
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.purpleAccent,
+//       body:Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Image.asset('assets/images/heart.png', height: 130,),
+//             const SizedBox(height: 30,),
+//             if(Platform.isIOS)
+//               const CupertinoActivityIndicator(
+//                 radius: 15,
+//               )
+//             else
+//               const CircularProgressIndicator(
+//                 color: Colors.white,
+//               )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+>>>>>>> ea2c86fe43d7f73b4c5e6b474b0bda6044e0f1e1

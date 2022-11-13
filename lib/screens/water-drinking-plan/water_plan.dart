@@ -8,6 +8,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../healthy-recipe/components/bottom_nav.dart';
+import 'water_drink_home.dart';
 import 'waterdrinking_history.dart';
 
 
@@ -21,6 +22,7 @@ class waterPlan extends StatefulWidget {
 
 class _waterPlanState extends State<waterPlan> {
   double? watergoal=0;
+  double? cup=0;
 
    @override
   void initState() {
@@ -29,11 +31,11 @@ class _waterPlanState extends State<waterPlan> {
     getDoubleValuesSF();
   }
 
-  int _counter = 0;
+  double _counter = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter(cup) {
     setState(() {
-      _counter=_counter+100;
+      _counter=_counter+ cup;
 
       // _counter++;
     });
@@ -43,6 +45,10 @@ class _waterPlanState extends State<waterPlan> {
         .push(MaterialPageRoute(builder: (context) => WaterDrinkingHistory()));
   }
 
+  void _navigatetowatergoal(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => WaterDrinkHOME()));
+  }
 
   final CollectionReference _waterintake =
   FirebaseFirestore.instance.collection('DailyWaterIntake');
@@ -51,6 +57,7 @@ class _waterPlanState extends State<waterPlan> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return double
     watergoal = prefs.getDouble('_waterlevel') ;
+    cup=prefs.getDouble('cup');
     setState(() {
 
     });
@@ -156,7 +163,7 @@ class _waterPlanState extends State<waterPlan> {
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child:  MaterialButton(
                         onPressed: () async {
-                          (context);
+                          _navigatetowatergoal(context);
 
                         },
                         color: Color(0xffc396e5),
@@ -196,7 +203,7 @@ class _waterPlanState extends State<waterPlan> {
               const SizedBox(
                 height: 20,
               ),
-              Text("your daily water Goal" +watergoal.toString(),  style: TextStyle(
+              Text("Your Daily Water Goal :" +watergoal.toString(),  style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontStyle: FontStyle.normal,
                 fontSize: 18,
@@ -224,7 +231,7 @@ class _waterPlanState extends State<waterPlan> {
                 height: 20,
               ),
                FloatingActionButton(
-                onPressed: _incrementCounter,
+                onPressed : ()=>_incrementCounter(cup!),
                 tooltip: 'Increment',
                 child: const Icon(Icons.add),
               ),
@@ -236,13 +243,13 @@ class _waterPlanState extends State<waterPlan> {
                 style: Theme.of(context).textTheme.headline6,
               ),
               Text("Your cup size "+
-                  '100'+"ml",
+                  '$cup'+"ml",
                 style: Theme.of(context).textTheme.headline6,
               ),
 
 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 child:  MaterialButton(
                   onPressed: () async {
 
