@@ -1,3 +1,6 @@
+import 'dart:html';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:health_manager_uee_project_2022/screens/symptoms-recorder/other_symptoms.dart';
@@ -533,5 +536,7 @@ class DoctorTreatments extends StatelessWidget {
     );
   }
 }
+
+
 
 

@@ -127,6 +127,7 @@ class _WaterHistoryPageState extends State<WaterDrinkingHistory> {
         ),
 
         body:
+
         StreamBuilder(
 
           stream: _waterintake.snapshots(),
@@ -255,6 +256,7 @@ class _WaterHistoryPageState extends State<WaterDrinkingHistory> {
             );
           },
         ),
+
 // Add new product
 
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
