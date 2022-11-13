@@ -1,6 +1,6 @@
-// Parana eka
-
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -18,8 +18,18 @@ class BWTHOME extends StatefulWidget {
 }
 
 class _BWTHOMEState extends State<BWTHOME> {
+  // List searchResult = [];
+  // // SEARCH FUNCTION
+  // void searchFromFirebase(String query)async{
+  //   final result = await FirebaseFirestore.instance.collection('weights')
+  //       .where('weight', isEqualTo: query)
+  //       .get();
+  //   setState(() {
+  //     searchResult = result.docs.map((e)=>e.data()).toList();
+  //   });
+  // }
   Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = const Text('My Body Weight Tracker');
+  Widget customSearchBar = const Text('Health Manager');
   // Text fields' controllers
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -125,7 +135,7 @@ class _BWTHOMEState extends State<BWTHOME> {
   Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
 
-      _weightController.text = documentSnapshot['weight'].toString();
+      _weightController.text = documentSnapshot['weight'] .toString();
       _dateController.text = documentSnapshot['date'];
     }
 
@@ -246,8 +256,8 @@ class _BWTHOMEState extends State<BWTHOME> {
               onPressed: () {
                 setState(() {
                   if (customIcon.icon == Icons.search) {
-                    customIcon = const Icon(Icons.cancel);
-                    customSearchBar = const ListTile(
+                    customIcon =  Icon(Icons.cancel);
+                    customSearchBar = ListTile(
                       leading: Icon(
                         Icons.search,
                         color: Colors.white,
@@ -266,6 +276,9 @@ class _BWTHOMEState extends State<BWTHOME> {
                         style: TextStyle(
                           color: Colors.white,
                         ),
+                        // onChanged: (query){
+                        //   searchFromFirebase(query);
+                        // },
                       ),
                     );
                   }else {
@@ -284,6 +297,7 @@ class _BWTHOMEState extends State<BWTHOME> {
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
               return ListView.builder(
+
                 itemCount: streamSnapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   final DocumentSnapshot documentSnapshot =
@@ -405,5 +419,45 @@ class _BWTHOMEState extends State<BWTHOME> {
 
   void _navigateToAnalytics(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeightChart()));
+  }
+}
+
+//Body Weight Splash Screen
+class BWTSplash extends StatefulWidget {
+  const BWTSplash({Key? key}) : super(key: key);
+
+  @override
+  State<BWTSplash> createState() => _BWTSplashState();
+}
+
+class _BWTSplashState extends State<BWTSplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BWTHOME()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
+    );
   }
 }

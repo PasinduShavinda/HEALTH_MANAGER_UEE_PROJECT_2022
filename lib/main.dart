@@ -6,14 +6,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:health_manager_uee_project_2022/screens/home_page.dart';
 
-
-
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +24,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Splash Screen
 class HomeSplash extends StatefulWidget {
   const HomeSplash({Key? key}) : super(key: key);
   
@@ -35,7 +32,6 @@ class HomeSplash extends StatefulWidget {
   State<HomeSplash> createState() => _HomeSplashState();
 }
 
-// Splash Screen
 class _HomeSplashState extends State<HomeSplash> {
   void initState(){
     super.initState();
@@ -46,7 +42,7 @@ class _HomeSplashState extends State<HomeSplash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purpleAccent,
+      backgroundColor: Color(0xffc396e5),
       body:Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

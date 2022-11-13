@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../healthy-recipe/components/bottom_nav.dart';
 import 'bmi-calculation.dart';
 import 'bmi-result.dart';
+import 'dart:io';
 
 enum Gender{
   male,
@@ -409,3 +411,44 @@ class _BMIHOMEState extends State<BMIHOME> {
     Navigator.push(context,MaterialPageRoute(builder: (context) => BMIResult(obj.calResult(), obj.msg, obj.getDescription())));
   }
 }
+
+//BMI Splash Screen
+class BMISplash extends StatefulWidget {
+  const BMISplash({Key? key}) : super(key: key);
+
+  @override
+  State<BMISplash> createState() => _BMISplashState();
+}
+
+class _BMISplashState extends State<BMISplash> {
+  void initState(){
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BMIHOME()));
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffc396e5),
+      body:Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/heart.png', height: 130,),
+            const SizedBox(height: 30,),
+            if(Platform.isIOS)
+              const CupertinoActivityIndicator(
+                radius: 15,
+              )
+            else
+              const CircularProgressIndicator(
+                color: Colors.white,
+              )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
